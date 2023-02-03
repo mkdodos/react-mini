@@ -4,6 +4,8 @@ import List from './components/List';
 import EditForm from './components/EditForm';
 import Dashboard from './components/Dashboard';
 import { Container,Button } from 'semantic-ui-react';
+import Modal from './components/Modal';
+
 
 export default function Index() {
   // 資料集合
@@ -86,18 +88,20 @@ export default function Index() {
   return (
     <div>
       <Container>
-        <EditForm
+      <EditForm
           rows={rows}
           setRows={setRows}
           row={row}
           setRow={setRow}
           saveRow={saveRow}
         />
+        <Modal rows={rows} editRow={editRow}/>
+      
 
       
-        <Dashboard rows={rows} />
+        {/* <Dashboard rows={rows} /> */}
        
-        <List rows={rows} deleteRow={deleteRow} editRow={editRow} />
+        {/* <List rows={rows} deleteRow={deleteRow} editRow={editRow} /> */}
       </Container>
     </div>
   );
