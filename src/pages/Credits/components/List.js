@@ -13,7 +13,7 @@ export default function List({rows,deleteRow,editRow}) {
 
   return (
     <div>
-      <Container>
+     
         <Header as="h1">First Header</Header>
         <Button>新增</Button>
 
@@ -45,7 +45,7 @@ export default function List({rows,deleteRow,editRow}) {
             })}
           </Table.Body>
         </Table>
-      </Container>
+     
     </div>
   );
 }

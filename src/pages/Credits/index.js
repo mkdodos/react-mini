@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../../utils/firebase';
 import List from './components/List';
 import EditForm from './components/EditForm';
+import Dashboard from './components/Dashboard';
+import { Container,Button } from 'semantic-ui-react';
 
 export default function Index() {
-
   // 資料集合
   const [rows, setRows] = useState([]);
 
@@ -31,6 +32,7 @@ export default function Index() {
         return { ...doc.data(), id: doc.id };
       });
       setRows(data);
+     
     });
   }, []);
 
@@ -76,19 +78,27 @@ export default function Index() {
   // 編輯(設定索引和編輯列)
   const editRow = (row, index) => {
     setEditRowIndex(index);
-    setRow(row);    
+    setRow(row);
   };
+
+ 
 
   return (
     <div>
-      <EditForm
-        rows={rows}
-        setRows={setRows}
-        row={row}
-        setRow={setRow}
-        saveRow={saveRow}
-      />
-      <List rows={rows} deleteRow={deleteRow} editRow={editRow} />
+      <Container>
+        <EditForm
+          rows={rows}
+          setRows={setRows}
+          row={row}
+          setRow={setRow}
+          saveRow={saveRow}
+        />
+
+      
+        <Dashboard rows={rows} />
+       
+        <List rows={rows} deleteRow={deleteRow} editRow={editRow} />
+      </Container>
     </div>
   );
 }
