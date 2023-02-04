@@ -3,11 +3,15 @@ import { db } from '../../utils/firebase';
 import List from './components/List';
 import EditForm from './components/EditForm';
 import Dashboard from './components/Dashboard';
-import { Container,Button } from 'semantic-ui-react';
-import Modal from './components/Modal';
+import { Container, Button } from 'semantic-ui-react';
 
+import DataList from './components/DataList';
+import ModalForm from './components/ModalForm';
 
 export default function Index() {
+  // 編輯表單開關
+  const [open, setOpen] = React.useState(false);
+
   // 資料集合
   const [rows, setRows] = useState([]);
 
@@ -34,7 +38,6 @@ export default function Index() {
         return { ...doc.data(), id: doc.id };
       });
       setRows(data);
-     
     });
   }, []);
 
@@ -52,6 +55,7 @@ export default function Index() {
           // 設為初始值
           setRow(defalutItem);
           setEditRowIndex(-1);
+          setOpen(false);
         });
     } else {
       // 新增
@@ -61,19 +65,21 @@ export default function Index() {
         // 設為初始值
         setRow(defalutItem);
         setEditRowIndex(-1);
+        setOpen(false);
       });
     }
   };
 
   // 刪除
-  const deleteRow = (row, index) => {
+  const deleteRow = (row) => {
     dbCol
       .doc(row.id)
       .delete()
       .then(() => {
         const newRows = rows.slice();
-        newRows.splice(index, 1);
+        newRows.splice(editRowIndex, 1);
         setRows(newRows);
+        setOpen(false);
       });
   };
 
@@ -81,26 +87,45 @@ export default function Index() {
   const editRow = (row, index) => {
     setEditRowIndex(index);
     setRow(row);
+    setOpen(true);
   };
 
- 
+  // 新增一筆
+  const newRow = () => {
+    setEditRowIndex(-1);
+    setRow(defalutItem);
+    setOpen(true);
+  };
 
   return (
     <div>
       <Container>
-      <EditForm
+        {/* <EditForm
           rows={rows}
           setRows={setRows}
           row={row}
           setRow={setRow}
           saveRow={saveRow}
-        />
-        <Modal rows={rows} editRow={editRow}/>
-      
+        /> */}
 
-      
+        <Button onClick={newRow}>新增</Button>
+        <ModalForm
+          open={open}
+          setOpen={setOpen}
+          rows={rows}
+          setRows={setRows}
+          row={row}
+          setRow={setRow}
+          saveRow={saveRow}
+          deleteRow={deleteRow}
+        />
+
+        <DataList rows={rows} editRow={editRow} />
+
+        {/* <Modal rows={rows} editRow={editRow}/> */}
+
         {/* <Dashboard rows={rows} /> */}
-       
+
         {/* <List rows={rows} deleteRow={deleteRow} editRow={editRow} /> */}
       </Container>
     </div>

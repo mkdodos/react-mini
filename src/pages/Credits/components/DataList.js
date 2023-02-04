@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Header, Label } from 'semantic-ui-react';
-export default function Modal({ rows,editRow }) {
+export default function DataList({ rows,editRow }) {
   return (
     <div>
       <Table unstackable>

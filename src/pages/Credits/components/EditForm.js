@@ -43,7 +43,7 @@ export default function EditForm({ rows, setRows, row, setRow, saveRow }) {
         </Form.Field>
 
         <Button type="submit" onClick={saveRow}>
-          Submit
+          儲存
         </Button>
       </Form>
     </div>
