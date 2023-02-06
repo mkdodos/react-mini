@@ -3,14 +3,17 @@ import { db } from '../../utils/firebase';
 import List from './components/List';
 import EditForm from './components/EditForm';
 import Dashboard from './components/Dashboard';
-import { Container, Button } from 'semantic-ui-react';
+import { Container, Button,Divider,Icon } from 'semantic-ui-react';
 
 import DataList from './components/DataList';
 import ModalForm from './components/ModalForm';
 
 export default function Index() {
   // 編輯表單開關
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+
+  // 載入中
+  const [loading, setLoading]=useState(false);
 
   // 資料集合
   const [rows, setRows] = useState([]);
@@ -43,6 +46,7 @@ export default function Index() {
 
   // 儲存(新增或更新)
   const saveRow = () => {
+    setLoading(true)
     // 更新
     if (editRowIndex > -1) {
       dbCol
@@ -56,22 +60,28 @@ export default function Index() {
           setRow(defalutItem);
           setEditRowIndex(-1);
           setOpen(false);
+          setLoading(false)
         });
     } else {
       // 新增
       dbCol.add(row).then((doc) => {
+        const newRows = rows.slice();
+        newRows.unshift({ ...row, id: doc.id })
         // 將資料加到表格中,包含剛新增的id,做為刪除之用
-        setRows([...rows, { ...row, id: doc.id }]);
+        // setRows([...rows, { ...row, id: doc.id }]);
+        setRows(newRows);
         // 設為初始值
         setRow(defalutItem);
         setEditRowIndex(-1);
         setOpen(false);
+        setLoading(false)
       });
     }
   };
 
   // 刪除
   const deleteRow = (row) => {
+    setLoading(true)
     dbCol
       .doc(row.id)
       .delete()
@@ -80,6 +90,7 @@ export default function Index() {
         newRows.splice(editRowIndex, 1);
         setRows(newRows);
         setOpen(false);
+        setLoading(false)
       });
   };
 
@@ -108,7 +119,9 @@ export default function Index() {
           saveRow={saveRow}
         /> */}
 
-        <Button onClick={newRow}>新增</Button>
+ <Divider horizontal>信用卡 111/12</Divider>
+        <Button onClick={newRow}><Icon name='plus'/>新增</Button>
+       
         <ModalForm
           open={open}
           setOpen={setOpen}
@@ -118,15 +131,20 @@ export default function Index() {
           setRow={setRow}
           saveRow={saveRow}
           deleteRow={deleteRow}
+          loading={loading}
         />
 
+        <Dashboard rows={rows} />
+       
+        {/* <List rows={rows} deleteRow={deleteRow} editRow={editRow} /> */}
+       
         <DataList rows={rows} editRow={editRow} />
 
         {/* <Modal rows={rows} editRow={editRow}/> */}
 
-        {/* <Dashboard rows={rows} /> */}
+      
 
-        {/* <List rows={rows} deleteRow={deleteRow} editRow={editRow} /> */}
+       
       </Container>
     </div>
   );

@@ -13,7 +13,7 @@ export default function DataList({ rows,editRow }) {
                   <span>{row.consumeDate} </span>
                 </Table.Cell>
                 <Table.Cell textAlign="right">
-                  <Label  basic>
+                  <Label color='teal'  basic>
                     ${row.amt}
                   </Label>
                 </Table.Cell>

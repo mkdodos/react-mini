@@ -14,8 +14,8 @@ export default function List({rows,deleteRow,editRow}) {
   return (
     <div>
      
-        <Header as="h1">First Header</Header>
-        <Button>新增</Button>
+      
+       
 
         <Table celled selectable unstackable>
           <Table.Header>

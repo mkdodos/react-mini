@@ -10,7 +10,8 @@ export default function ModalForm({
   row,
   setRow,
   saveRow,
-  deleteRow
+  deleteRow,
+  loading
 }) {
   // const [open, setOpen] = React.useState(false)
 
@@ -20,9 +21,10 @@ export default function ModalForm({
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
+        closeIcon
         
       >
-        <Modal.Header>Select a Photo</Modal.Header>
+        <Modal.Header>編輯</Modal.Header>
         <Modal.Content>
           <EditForm
             rows={rows}
@@ -30,10 +32,11 @@ export default function ModalForm({
             row={row}
             setRow={setRow}
             saveRow={saveRow}
+            loading={loading}
           />
         </Modal.Content>
         <Modal.Actions>
-          <Button color="black" onClick={() => deleteRow(row)}>
+          <Button color="black" loading={loading} onClick={() => deleteRow(row)}>
             刪除
           </Button>
          

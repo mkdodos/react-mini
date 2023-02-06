@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Form, Button, Checkbox } from 'semantic-ui-react';
 
-export default function EditForm({ rows, setRows, row, setRow, saveRow }) {
+export default function EditForm({
+  rows,
+  setRows,
+  row,
+  setRow,
+  saveRow,
+  loading,
+}) {
   useEffect(() => {}, []);
 
   // 輸入資料時同時設定 row
@@ -12,6 +19,15 @@ export default function EditForm({ rows, setRows, row, setRow, saveRow }) {
   return (
     <div>
       <Form>
+        <Form.Field>
+          <label>期數</label>
+          <input
+            type="number"
+            value={row.section}
+            onChange={inputChange}
+            name="section"
+          />
+        </Form.Field>
         <Form.Field>
           <label>日期</label>
           <input
@@ -35,6 +51,7 @@ export default function EditForm({ rows, setRows, row, setRow, saveRow }) {
         <Form.Field>
           <label>金額</label>
           <input
+            type="number"
             placeholder=""
             value={row.amt}
             onChange={inputChange}
@@ -42,7 +59,7 @@ export default function EditForm({ rows, setRows, row, setRow, saveRow }) {
           />
         </Form.Field>
 
-        <Button type="submit" onClick={saveRow}>
+        <Button primary fluid loading={loading} type="submit" onClick={saveRow}>
           儲存
         </Button>
       </Form>
