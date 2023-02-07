@@ -3,7 +3,14 @@ import { db } from '../../utils/firebase';
 import List from './components/List';
 import EditForm from './components/EditForm';
 import Dashboard from './components/Dashboard';
-import { Container, Button, Divider, Icon, Input } from 'semantic-ui-react';
+import {
+  Container,
+  Button,
+  Divider,
+  Icon,
+  Input,
+  Segment,
+} from 'semantic-ui-react';
 
 import DataList from './components/DataList';
 import ModalForm from './components/ModalForm';
@@ -43,6 +50,7 @@ export default function Index() {
 
   // 篩選
   const [filterText, setFilterText] = useState('');
+  const [filterSection, setFilterSection] = useState('11112');
 
   // 取得資料
   useEffect(() => {
@@ -53,11 +61,9 @@ export default function Index() {
       setRows(data);
       setRowsCopy(data);
 
+      // 排序
       // sortData(data).reverse()
       sortData(data);
-      // filterData(filterText);
-      // filterData(data, 'PX Pay');
-      // console.log(direction);
     });
   }, []);
 
@@ -74,9 +80,78 @@ export default function Index() {
     if (direction == 'decending') setDirection('acending');
   };
 
+  function isBigEnough(obj) {
+    return obj.amt >= 1000;
+  }
+
+  // const filter = {
+  //   address: 'England',
+  //   name: 'Tom',
+  // };
+
+
+  // 組合條件
+  const filter = {
+    
+  };
+
+  // 加入條件
+  filter.address='England';
+  filter.name='Tom';
+  
+  // 刪除條件
+  delete filter['name'];
+  // delete filter['address'];
+
+  let users = [
+    {
+      name: 'John',
+      email: 'johnson@mail.com',
+      age: 25,
+      address: 'USA',
+    },
+    {
+      name: 'Tom',
+      email: 'tom@mail.com',
+      age: 35,
+      address: 'England',
+    },
+    {
+      name: 'Mark',
+      email: 'mark@mail.com',
+      age: 28,
+      address: 'England',
+    },
+  ];
+
+  // 每筆資料和條件比對,只要不符合就排除
+  // 參考https://stackoverflow.com/questions/31831651/javascript-filter-array-multiple-conditions
+  users = users.filter((item) => {
+    for (let key in filter) {
+      // console.log(item[key]);
+      if (item[key] != filter[key]) return false;
+      // if (filter[key].length==0) return true;
+      // if (item[key] === undefined || item[key] != filter[key]) return false;
+    }
+    return true;
+  });
+
+  console.log(users);
+
   // 篩選
   const filterData = (e) => {
-    setRows(rowsCopy.filter((row) => row.note.includes(e.target.value)));
+    // includes 傳回 true false
+    let newData = rowsCopy.filter((row) => row.note.includes(e.target.value));
+    setRows(newData);
+    // setRows(rowsCopy.filter((row) => row.note.includes(e.target.value)));
+    // setRows(rowsCopy.filter(isBigEnough));
+  };
+
+  // 篩選
+  const filterDataBySection = (e) => {
+    let newData = rowsCopy;
+    newData = newData.filter((row) => row.section == e.target.value);
+    setRows(newData);
   };
 
   // 儲存(新增或更新)
@@ -174,39 +249,42 @@ export default function Index() {
 
         <Dashboard rows={rows} />
 
-        <Button
-          icon
-          onClick={() => {
-            setColumn('date');
-            sortData(rows, 'date');
-          }}
-        >
-          日期排序
-          {direction == 'decending' && column == 'date' && (
-            <Icon name="angle up" />
-          )}
-          {direction == 'acending' && column == 'date' && (
-            <Icon name="angle down" />
-          )}
-        </Button>
+        <Segment>
+          <Button
+            icon
+            onClick={() => {
+              setColumn('date');
+              sortData(rows, 'date');
+            }}
+          >
+            日期
+            {direction == 'decending' && column == 'date' && (
+              <Icon name="angle up" />
+            )}
+            {direction == 'acending' && column == 'date' && (
+              <Icon name="angle down" />
+            )}
+          </Button>
 
-        <Button
-          icon
-          onClick={() => {
-            setColumn('amt');
-            sortData(rows, 'amt');
-          }}
-        >
-          金額排序
-          {direction == 'decending' && column == 'amt' && (
-            <Icon name="angle up" />
-          )}
-          {direction == 'acending' && column == 'amt' && (
-            <Icon name="angle down" />
-          )}
-        </Button>
+          <Button
+            icon
+            onClick={() => {
+              setColumn('amt');
+              sortData(rows, 'amt');
+            }}
+          >
+            金額
+            {direction == 'decending' && column == 'amt' && (
+              <Icon name="angle up" />
+            )}
+            {direction == 'acending' && column == 'amt' && (
+              <Icon name="angle down" />
+            )}
+          </Button>
 
-        <Input onChange={filterData} />
+          <Input onChange={filterData} size="small" />
+          <Input onChange={filterDataBySection} size="small" />
+        </Segment>
 
         {/* <List rows={rows} deleteRow={deleteRow} editRow={editRow} /> */}
 
