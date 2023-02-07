@@ -36,7 +36,7 @@ export default function ModalForm({
           />
         </Modal.Content>
         <Modal.Actions>
-          <Button color="black" loading={loading} onClick={() => deleteRow(row)}>
+          <Button floated='left' color="black" loading={loading} onClick={() => deleteRow(row)}>
             刪除
           </Button>
          

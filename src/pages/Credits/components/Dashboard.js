@@ -25,6 +25,7 @@ export default function Dashboard({ rows }) {
           <Statistic.Value>{numberFormat(total)}</Statistic.Value>
         </Statistic>
       </Segment>
+     
     </>
   );
 }
