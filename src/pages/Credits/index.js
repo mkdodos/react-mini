@@ -3,7 +3,7 @@ import { db } from '../../utils/firebase';
 import List from './components/List';
 import EditForm from './components/EditForm';
 import Dashboard from './components/Dashboard';
-import { Container, Button, Divider, Icon } from 'semantic-ui-react';
+import { Container, Button, Divider, Icon, Input } from 'semantic-ui-react';
 
 import DataList from './components/DataList';
 import ModalForm from './components/ModalForm';
@@ -17,6 +17,8 @@ export default function Index() {
 
   // 資料集合
   const [rows, setRows] = useState([]);
+
+  const [rowsCopy, setRowsCopy] = useState([]);
 
   // 編輯列索引
   const [editRowIndex, setEditRowIndex] = useState(-1);
@@ -37,6 +39,10 @@ export default function Index() {
 
   // 排序
   const [direction, setDirection] = useState('acending');
+  const [column, setColumn] = useState('');
+
+  // 篩選
+  const [filterText, setFilterText] = useState('');
 
   // 取得資料
   useEffect(() => {
@@ -45,26 +51,32 @@ export default function Index() {
         return { ...doc.data(), id: doc.id };
       });
       setRows(data);
+      setRowsCopy(data);
 
       // sortData(data).reverse()
-      sortData(data)
-      console.log(direction)
+      sortData(data);
+      // filterData(filterText);
+      // filterData(data, 'PX Pay');
+      // console.log(direction);
     });
   }, []);
 
   // 排序
-  const sortData = (data) => {
-    
-
+  const sortData = (data, column) => {
     data = data.slice().sort(function (a, b) {
-      return a.consumeDate > b.consumeDate ? 1 : -1;
-      // return a.amt*1 > b.amt*1 ? 1 : -1;
+      if (column == 'date') return a.consumeDate > b.consumeDate ? 1 : -1;
+      if (column == 'amt') return a.amt * 1 > b.amt * 1 ? 1 : -1;
     });
     if (direction == 'decending') data.reverse();
     setRows(data);
     // 遞增遞減
     if (direction == 'acending') setDirection('decending');
     if (direction == 'decending') setDirection('acending');
+  };
+
+  // 篩選
+  const filterData = (e) => {
+    setRows(rowsCopy.filter((row) => row.note.includes(e.target.value)));
   };
 
   // 儲存(新增或更新)
@@ -162,17 +174,39 @@ export default function Index() {
 
         <Dashboard rows={rows} />
 
-        <Button icon
+        <Button
+          icon
           onClick={() => {
-            sortData(rows);
+            setColumn('date');
+            sortData(rows, 'date');
           }}
         >
           日期排序
-          {direction=='decending' &&   <Icon name='angle up' /> }
-          {direction=='acending' &&   <Icon name='angle down' /> }
-        
-          
+          {direction == 'decending' && column == 'date' && (
+            <Icon name="angle up" />
+          )}
+          {direction == 'acending' && column == 'date' && (
+            <Icon name="angle down" />
+          )}
         </Button>
+
+        <Button
+          icon
+          onClick={() => {
+            setColumn('amt');
+            sortData(rows, 'amt');
+          }}
+        >
+          金額排序
+          {direction == 'decending' && column == 'amt' && (
+            <Icon name="angle up" />
+          )}
+          {direction == 'acending' && column == 'amt' && (
+            <Icon name="angle down" />
+          )}
+        </Button>
+
+        <Input onChange={filterData} />
 
         {/* <List rows={rows} deleteRow={deleteRow} editRow={editRow} /> */}
 
