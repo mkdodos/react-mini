@@ -52,6 +52,8 @@ export default function Index() {
   const [filterText, setFilterText] = useState('');
   const [filterSection, setFilterSection] = useState('11112');
 
+  const [filter, setFilter] = useState({});
+
   // 取得資料
   useEffect(() => {
     dbCol.get().then((snapshot) => {
@@ -89,69 +91,101 @@ export default function Index() {
   //   name: 'Tom',
   // };
 
-
   // 組合條件
-  const filter = {
-    
-  };
+  // const filter = {
+
+  // };
 
   // 加入條件
-  filter.address='England';
-  filter.name='Tom';
-  
+  // filter.address='England';
+  // filter.name='Tom';
+
   // 刪除條件
-  delete filter['name'];
+  // delete filter['name'];
   // delete filter['address'];
 
-  let users = [
-    {
-      name: 'John',
-      email: 'johnson@mail.com',
-      age: 25,
-      address: 'USA',
-    },
-    {
-      name: 'Tom',
-      email: 'tom@mail.com',
-      age: 35,
-      address: 'England',
-    },
-    {
-      name: 'Mark',
-      email: 'mark@mail.com',
-      age: 28,
-      address: 'England',
-    },
-  ];
+  // let users = [
+  //   {
+  //     name: 'John',
+  //     email: 'johnson@mail.com',
+  //     age: 25,
+  //     address: 'USA',
+  //   },
+  //   {
+  //     name: 'Tom',
+  //     email: 'tom@mail.com',
+  //     age: 35,
+  //     address: 'England',
+  //   },
+  //   {
+  //     name: 'Mark',
+  //     email: 'mark@mail.com',
+  //     age: 28,
+  //     address: 'England',
+  //   },
+  // ];
 
   // 每筆資料和條件比對,只要不符合就排除
   // 參考https://stackoverflow.com/questions/31831651/javascript-filter-array-multiple-conditions
-  users = users.filter((item) => {
-    for (let key in filter) {
-      // console.log(item[key]);
-      if (item[key] != filter[key]) return false;
-      // if (filter[key].length==0) return true;
-      // if (item[key] === undefined || item[key] != filter[key]) return false;
-    }
-    return true;
-  });
+  // users = users.filter((item) => {
+  // for (let key in filter) {
 
-  console.log(users);
+  // if (item[key] != filter[key]) return false;
+  // if (filter[key].length==0) return true;
+  // if (item[key] === undefined || item[key] != filter[key]) return false;
+  //   }
+  //   return true;
+  // });
+
+  // console.log(users);
 
   // 篩選
   const filterData = (e) => {
+    setFilter({ ...filter, note: e.target.value });
+    // for(let key in filter){
+    //   console.log(key)
+    // }
+
+    if (e.target.value == '')
+      setFilter((current) => {
+        // remove cost key from object
+        const { note, ...rest } = current;
+        return rest;
+      });
+
+    // let newData = rowsCopy.filter((row) => {
+    //   return row.note.includes(filter.note);
+    // });
+
+    // console.log(newData);
     // includes 傳回 true false
-    let newData = rowsCopy.filter((row) => row.note.includes(e.target.value));
-    setRows(newData);
+    // let newData = rowsCopy.filter((row) => row.note.includes(e.target.value));
+    // setRows(newData);
     // setRows(rowsCopy.filter((row) => row.note.includes(e.target.value)));
     // setRows(rowsCopy.filter(isBigEnough));
   };
 
   // 篩選
   const filterDataBySection = (e) => {
-    let newData = rowsCopy;
-    newData = newData.filter((row) => row.section == e.target.value);
-    setRows(newData);
+    setFilter({ ...filter, section: e.target.value });
+    if (e.target.value == '')
+      setFilter((current) => {
+        // remove cost key from object
+        const { section, ...rest } = current;
+        return rest;
+      });
+   
+   
+    // for(let key in filter){
+    //   console.log(key)
+    // }
+    // let newData = rowsCopy;
+    // newData = newData.filter((row) => row.section == e.target.value);
+    // setRows(newData);
+  };
+
+  const handleFilter = () => {
+    console.log(filter);
   };
 
   // 儲存(新增或更新)
@@ -221,6 +255,8 @@ export default function Index() {
   return (
     <div>
       <Container>
+        {filter.note}
+        {filter.section}
         {/* <EditForm
           rows={rows}
           setRows={setRows}
@@ -229,11 +265,14 @@ export default function Index() {
           saveRow={saveRow}
         /> */}
 
+        
         <Divider horizontal>信用卡 111/12</Divider>
         <Button onClick={newRow}>
           <Icon name="plus" />
           新增
         </Button>
+
+        <Button onClick={handleFilter}>篩選</Button>
 
         <ModalForm
           open={open}
