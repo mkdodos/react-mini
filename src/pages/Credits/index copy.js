@@ -82,41 +82,132 @@ export default function Index() {
     if (direction == 'decending') setDirection('acending');
   };
 
+  function isBigEnough(obj) {
+    return obj.amt >= 1000;
+  }
+
+  // const filter = {
+  //   address: 'England',
+  //   name: 'Tom',
+  // };
+
+  // 組合條件
+  // const filter = {
+
+  // };
+
+  // 加入條件
+  // filter.address='England';
+  // filter.name='Tom';
+
+  // 刪除條件
+  // delete filter['name'];
+  // delete filter['address'];
+
+  // let users = [
+  //   {
+  //     name: 'John',
+  //     email: 'johnson@mail.com',
+  //     age: 25,
+  //     address: 'USA',
+  //   },
+  //   {
+  //     name: 'Tom',
+  //     email: 'tom@mail.com',
+  //     age: 35,
+  //     address: 'England',
+  //   },
+  //   {
+  //     name: 'Mark',
+  //     email: 'mark@mail.com',
+  //     age: 28,
+  //     address: 'England',
+  //   },
+  // ];
+
   // 每筆資料和條件比對,只要不符合就排除
   // 參考https://stackoverflow.com/questions/31831651/javascript-filter-array-multiple-conditions
+  // users = users.filter((item) => {
+  // for (let key in filter) {
+
+  // if (item[key] != filter[key]) return false;
+  // if (filter[key].length==0) return true;
+  // if (item[key] === undefined || item[key] != filter[key]) return false;
+  //   }
+  //   return true;
+  // });
+
+  // console.log(users);
 
   // 篩選
-  const handleInputChange = (e) => {
-    // const key = e.target.name;
+  const filterData = (e) => {
+    setFilter({ ...filter, note: e.target.value });
+    // for(let key in filter){
+    //   console.log(key)
+    // }
 
-    if (e.target.value == '') {
+    if (e.target.value == '')
       setFilter((current) => {
         // remove cost key from object
-        // const { 某個屬性值 : 新的變數名, ...其餘的屬性 } = current
-        // 將目前 current 物件中的某個屬性值獨立為一個變數
-        // 然後物件其他的屬性值指派給新的物件變數
-        const { [e.target.name]: noUse, ...rest } = current;
+        const { note, ...rest } = current;
+        return rest;
+      });
+
+    // let newData = rowsCopy.filter((row) => {
+    //   return row.note.includes(filter.note);
+    // });
+
+    // console.log(newData);
+    // includes 傳回 true false
+    // let newData = rowsCopy.filter((row) => row.note.includes(e.target.value));
+    // setRows(newData);
+    // setRows(rowsCopy.filter((row) => row.note.includes(e.target.value)));
+    // setRows(rowsCopy.filter(isBigEnough));
+  };
+
+  // 篩選
+  const filterDataBySection = (e) => {
+   
+    if (e.target.value == ''){
+
+      setFilter((current) => {
+        // remove cost key from object
+        // 將目前物件中的 section 屬性值獨立為一個變數
+        // 然後物件其他的屬性值指派給 rest 這個新的物件變數
+
+        const { section, ...rest } = current;
         // 傳回 rest ,就沒有包含 section 屬性
         return rest;
       });
-    } else {
-      setFilter({ ...filter, [e.target.name]: e.target.value });
+    }else{
+
+      setFilter({ ...filter, section: e.target.value }); 
     }
+      
+
+    // for(let key in filter){
+    //   console.log(key)
+    // }
+    // let newData = rowsCopy;
+    // newData = newData.filter((row) => row.section == e.target.value);
+    // setRows(newData);
   };
 
-  
   const handleFilter = () => {
     let newData = rowsCopy;
 
     newData = newData.filter((row) => {
       for (let key in filter) {
+        // console.log(row[key])
+        // if (row[key] != filter[key]) return false;
         // 值有可能空,加上?判斷
         if (!row[key]?.includes(filter[key])) return false;
+
       }
       return true;
     });
     setRows(newData);
-    
+    console.log(filter);
   };
 
   // 儲存(新增或更新)
@@ -186,7 +277,8 @@ export default function Index() {
   return (
     <div>
       <Container>
-        
+        {filter.note}
+        {filter.section}
         {/* <EditForm
           rows={rows}
           setRows={setRows}
@@ -250,8 +342,8 @@ export default function Index() {
             )}
           </Button>
 
-          <Input placeholder="note" onChange={handleInputChange} name="note" size="small" />
-          <Input onChange={handleInputChange} name="section" size="small" />
+          <Input onChange={filterData} size="small" />
+          <Input onChange={filterDataBySection} size="small" />
         </Segment>
 
         {/* <List rows={rows} deleteRow={deleteRow} editRow={editRow} /> */}
