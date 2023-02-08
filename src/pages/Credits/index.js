@@ -167,15 +167,24 @@ export default function Index() {
 
   // 篩選
   const filterDataBySection = (e) => {
-    setFilter({ ...filter, section: e.target.value });
-    if (e.target.value == '')
+   
+    if (e.target.value == ''){
+
       setFilter((current) => {
         // remove cost key from object
+        // 將目前物件中的 section 屬性值獨立為一個變數
+        // 然後物件其他的屬性值指派給 rest 這個新的物件變數
+
         const { section, ...rest } = current;
+        // 傳回 rest ,就沒有包含 section 屬性
         return rest;
       });
-   
-   
+    }else{
+
+      setFilter({ ...filter, section: e.target.value }); 
+    }
+      
+
     // for(let key in filter){
     //   console.log(key)
     // }
@@ -185,6 +194,19 @@ export default function Index() {
   };
 
   const handleFilter = () => {
+    let newData = rowsCopy;
+
+    newData = newData.filter((row) => {
+      for (let key in filter) {
+        // console.log(row[key])
+        // if (row[key] != filter[key]) return false;
+        // 值有可能空,加上?判斷
+        if (!row[key]?.includes(filter[key])) return false;
+
+      }
+      return true;
+    });
+    setRows(newData);
     console.log(filter);
   };
 
@@ -265,7 +287,6 @@ export default function Index() {
           saveRow={saveRow}
         /> */}
 
-        
         <Divider horizontal>信用卡 111/12</Divider>
         <Button onClick={newRow}>
           <Icon name="plus" />
