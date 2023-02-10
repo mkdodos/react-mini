@@ -3,10 +3,6 @@ import { db } from '../../utils/firebase';
 import List from './components/List';
 import EditForm from './components/EditForm';
 import Dashboard from './components/Dashboard';
-import SearchBar from './components/SearchBar';
-import DataList from './components/DataList';
-import ModalForm from './components/ModalForm';
-
 import {
   Container,
   Button,
@@ -16,12 +12,12 @@ import {
   Segment,
 } from 'semantic-ui-react';
 
+import DataList from './components/DataList';
+import ModalForm from './components/ModalForm';
+
 export default function Index() {
   // 編輯表單開關
   const [open, setOpen] = useState(false);
-
-  // 篩選表單開關
-  const [openSearch, setOpenSearch] = useState(false);
 
   // 載入中
   const [loading, setLoading] = useState(false);
@@ -93,7 +89,6 @@ export default function Index() {
   const handleInputChange = (e) => {
     // const key = e.target.name;
 
-    // setFilter({ ...filter, [e.target.name]: e.target.value });
     if (e.target.value == '') {
       setFilter((current) => {
         // remove cost key from object
@@ -109,6 +104,7 @@ export default function Index() {
     }
   };
 
+  
   const handleFilter = () => {
     let newData = rowsCopy;
 
@@ -120,9 +116,7 @@ export default function Index() {
       return true;
     });
     setRows(newData);
-
-    // 關閉篩選表單
-    setOpenSearch(false);
+    
   };
 
   // 儲存(新增或更新)
@@ -192,6 +186,7 @@ export default function Index() {
   return (
     <div>
       <Container>
+        
         {/* <EditForm
           rows={rows}
           setRows={setRows}
@@ -206,21 +201,7 @@ export default function Index() {
           新增
         </Button>
 
-
-        <Button onClick={()=>setOpenSearch(true)}>
-          <Icon name="search" />
-          搜尋
-        </Button>
-
-        <SearchBar
-          open={openSearch}
-          setOpen={setOpenSearch}
-          handleFilter={handleFilter}
-          handleInputChange={handleInputChange}
-          filter={filter}
-        />
-
-        {/* <Button onClick={handleFilter}>篩選</Button> */}
+        <Button onClick={handleFilter}>篩選</Button>
 
         <ModalForm
           open={open}
@@ -269,9 +250,11 @@ export default function Index() {
             )}
           </Button>
 
-          {/* <Input placeholder="note" onChange={handleInputChange} name="note" size="small" /> */}
-          {/* <Input onChange={handleInputChange} name="section" size="small" /> */}
+          <Input placeholder="note" onChange={handleInputChange} name="note" size="small" />
+          <Input onChange={handleInputChange} name="section" size="small" />
         </Segment>
+
+        {/* <List rows={rows} deleteRow={deleteRow} editRow={editRow} /> */}
 
         <DataList rows={rows} editRow={editRow} />
 
