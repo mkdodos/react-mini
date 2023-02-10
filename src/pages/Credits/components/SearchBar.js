@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Header, Image, Modal, Input } from 'semantic-ui-react';
+import { Button, Header, Form, Modal, Input } from 'semantic-ui-react';
 import EditForm from './EditForm';
+import SectionDropdown from './SectionDropdown';
 
 export default function SearchBar({
   open,
@@ -10,6 +11,7 @@ export default function SearchBar({
   filter,
   handleFilter,
   handleInputChange,
+  handleSectionChange
 }) {
   return (
     <div>
@@ -22,20 +24,35 @@ export default function SearchBar({
       >
         <Modal.Header>篩選表單</Modal.Header>
         <Modal.Content>
-          <Input
-            value={filter.note}
-            placeholder="note"
-            onChange={handleInputChange}
-            name="note"
-            size="small"
-          />
-          <Input
+          <Form>
+            <Form.Field>
+              <label>項目</label>
+
+              <Input
+                value={filter.note}
+                // placeholder="note"
+                onChange={handleInputChange}
+                name="note"
+                size="small"
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>期數</label>
+              <SectionDropdown filter={filter} handleSectionChange={handleSectionChange} />  
+            </Form.Field>
+
+           
+            <Button onClick={handleFilter}>篩選</Button>
+          </Form>
+
+       
+          {/* <Input
             value={filter.section}
             onChange={handleInputChange}
             name="section"
             size="small"
-          />
-          <Button onClick={handleFilter}>篩選</Button>
+          /> */}
+         
         </Modal.Content>
         <Modal.Actions></Modal.Actions>
       </Modal>

@@ -109,6 +109,10 @@ export default function Index() {
     }
   };
 
+  const handleSectionChange = (e, obj) => {
+    setFilter({ ...filter, section: obj.value });
+  };
+
   const handleFilter = () => {
     let newData = rowsCopy;
 
@@ -206,8 +210,7 @@ export default function Index() {
           新增
         </Button>
 
-
-        <Button onClick={()=>setOpenSearch(true)}>
+        <Button onClick={() => setOpenSearch(true)}>
           <Icon name="search" />
           搜尋
         </Button>
@@ -217,6 +220,7 @@ export default function Index() {
           setOpen={setOpenSearch}
           handleFilter={handleFilter}
           handleInputChange={handleInputChange}
+          handleSectionChange={handleSectionChange}
           filter={filter}
         />
 
