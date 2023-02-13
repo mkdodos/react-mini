@@ -34,12 +34,15 @@ export default function Index() {
   // 編輯列索引
   const [editRowIndex, setEditRowIndex] = useState(-1);
 
+  // 當期數
+  const activeSetion = '11201';
+
   // 表單預設值
   const defalutItem = {
     consumeDate: new Date().toISOString().slice(0, 10),
     note: '',
     amt: '',
-    section: '11112',
+    section: activeSetion,
   };
 
   // 編輯列
@@ -54,9 +57,11 @@ export default function Index() {
 
   // 篩選
   const [filterText, setFilterText] = useState('');
-  const [filterSection, setFilterSection] = useState('11112');
+  const [filterSection, setFilterSection] = useState(activeSetion);
 
-  const [filter, setFilter] = useState({});
+  const [filter, setFilter] = useState({
+    section:activeSetion
+  });
 
   // 取得資料
   useEffect(() => {
@@ -67,9 +72,13 @@ export default function Index() {
       setRows(data);
       setRowsCopy(data);
 
+      // 預設載入當期資料
+      const newData = data.slice().filter((row) => row.section == activeSetion);
+      setRows(newData);
+      // console.log(newData)
       // 排序
       // sortData(data).reverse()
-      sortData(data);
+      // sortData(data);
     });
   }, []);
 
@@ -127,6 +136,9 @@ export default function Index() {
 
     // 關閉篩選表單
     setOpenSearch(false);
+
+    console.log(filter)
+    console.log(newData)
   };
 
   // 儲存(新增或更新)
@@ -141,6 +153,7 @@ export default function Index() {
           const newRows = rows.slice();
           Object.assign(newRows[editRowIndex], row);
           setRows(newRows);
+          setRowsCopy(newRows);
           // 設為初始值
           setRow(defalutItem);
           setEditRowIndex(-1);
@@ -155,11 +168,14 @@ export default function Index() {
         // 將資料加到表格中,包含剛新增的id,做為刪除之用
         // setRows([...rows, { ...row, id: doc.id }]);
         setRows(newRows);
+        // setRowsCopy(newRows);
+        // console.log(rowsCopy)
         // 設為初始值
         setRow(defalutItem);
         setEditRowIndex(-1);
         setOpen(false);
         setLoading(false);
+        // console.log(newRows)
       });
     }
   };
@@ -174,6 +190,7 @@ export default function Index() {
         const newRows = rows.slice();
         newRows.splice(editRowIndex, 1);
         setRows(newRows);
+        setRowsCopy(newRows);
         setOpen(false);
         setLoading(false);
       });
@@ -204,7 +221,7 @@ export default function Index() {
           saveRow={saveRow}
         /> */}
 
-        <Divider horizontal>信用卡 111/12</Divider>
+        <Divider horizontal>信用卡 {filter.section}</Divider>
         <Button onClick={newRow}>
           <Icon name="plus" />
           新增

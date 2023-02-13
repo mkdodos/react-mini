@@ -6,6 +6,7 @@ import Notebook from "./pages/Notebook";
 // import Credit from "./pages/Credit";
 
 import Credits from "./pages/Credits";
+import Sections from "./pages/Sections"
 
 import {
   createBrowserRouter,
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/credits",
     element: <Credits/>
+  },
+  {
+    path: "/sections",
+    element: <Sections/>
   },
 ]);
 
