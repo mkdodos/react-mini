@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
-import { db_echoway } from '../../utils/firebase';
+import { db } from '../../utils/firebase';
 
 import TableList from './components/TableList';
 import EditForm from './components/EditForm';
 
-import { Container } from 'semantic-ui-react';
+import { Container, Button, Icon } from 'semantic-ui-react';
 
 export default function Index() {
   // firebase 集合
-  const dbCol = db_echoway.collection('meals');
+  const dbCol = db.collection('notes');
 
   // 資料陣列
   const [rows, setRows] = useState([]);
 
   // 表單預設值
-  const defalutItem = { name: '', amt: '' };
+  const defalutItem = {
+    date: new Date().toISOString().slice(0, 10),
+    content: '',
+  };
 
   // 編輯列
   const [row, setRow] = useState(defalutItem);
@@ -38,7 +41,6 @@ export default function Index() {
       setRows(data);
     });
   }, []);
-
 
   // 編輯(設定索引和編輯列)
   const editRow = (row, index) => {
@@ -99,8 +101,20 @@ export default function Index() {
       });
   };
 
+  // 新增一筆
+  const newRow = () => {
+    setEditRowIndex(-1);
+    setRow(defalutItem);
+    setOpen(true);
+  };
+
   return (
     <Container>
+      <Button onClick={newRow}>
+        <Icon name="plus" />
+        新增
+      </Button>
+
       <EditForm
         open={open}
         setOpen={setOpen}

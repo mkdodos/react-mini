@@ -1,12 +1,36 @@
-import React from 'react'
+import React from 'react';
+import { Menu } from 'semantic-ui-react';
+
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   return (
-    <div className='navbar'>
-      <div className='container'>
-        <div className='logo'>logo</div>
-        <div className='links'>links</div>
-      </div>
-    </div>
-  )
+    <Menu>
+      <Menu.Item name="editorials">
+        <Link className="link" to="/credits">
+          信用卡
+        </Link>
+      </Menu.Item>
+
+      <Menu.Item name="reviews">
+        <Link className="link" to="/sections">
+          期數
+        </Link>
+      </Menu.Item>
+
+      <Menu.Item name="reviews">
+        <Link className="link" to="/meals">
+          訂餐
+        </Link>
+      </Menu.Item>
+
+      <Menu.Item name="reviews">
+        <Link className="link" to="/notes">
+          記事
+        </Link>
+      </Menu.Item>
+
+      
+    </Menu>
+  );
 }

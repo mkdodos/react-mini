@@ -8,21 +8,58 @@ import Notebook from "./pages/Notebook";
 import Credits from "./pages/Credits";
 import Sections from "./pages/Sections";
 import Meals from "./pages/Meals";
+import Notes from "./pages/Notes";
 
 import {
   createBrowserRouter,
   RouterProvider,
+  Outlet
 } from "react-router-dom";
+
+
+const Layout = () => {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+      {/* <Footer /> */}
+    </>
+  );
+};
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: 
-    <div>
-       <Navbar/>  
-       <Footer/>  
-    </div>
+    element: <Layout/>,
+    children: [
+      {
+        path: "/credits",
+        element: <Credits />,
+      },
+      {
+        path: "/sections",
+        element: <Sections/>
+      },
+      {
+        path: "/meals",
+        element: <Meals/>
+      },
+
+      {
+        path: "/notes",
+        element: <Notes/>
+      },
+      
+    ],
+   
+    // path: "/",
+    // element: 
+    // <>
+    //    <Navbar/>  
+    //    <Outlet />
+    //    <Footer/>  
+    // </>
    
   },
   {
@@ -41,14 +78,7 @@ const router = createBrowserRouter([
     path: "/credits",
     element: <Credits/>
   },
-  {
-    path: "/sections",
-    element: <Sections/>
-  },
-  {
-    path: "/meals",
-    element: <Meals/>
-  },
+  
 ]);
 
 
