@@ -20,12 +20,11 @@ export default function EditForm({
     <div>
       <Form>
         <Form.Field>
-          <label>期數</label>
-          <input
-            type="number"
-            value={row.section}
+          <label>姓名</label>
+          <input            
+            value={row.name}
             onChange={inputChange}
-            name="section"
+            name="name"
           />
         </Form.Field>
 

@@ -6,7 +6,8 @@ import Notebook from "./pages/Notebook";
 // import Credit from "./pages/Credit";
 
 import Credits from "./pages/Credits";
-import Sections from "./pages/Sections"
+import Sections from "./pages/Sections";
+import Meals from "./pages/Meals";
 
 import {
   createBrowserRouter,
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/sections",
     element: <Sections/>
+  },
+  {
+    path: "/meals",
+    element: <Meals/>
   },
 ]);
 

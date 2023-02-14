@@ -1,30 +1,33 @@
 import { useEffect, useState } from 'react';
-import { db } from '../../utils/firebase';
-import TableList from './components/TableList';
+import { db_echoway } from '../../utils/firebase';
+
 import EditForm from './components/EditForm';
-import { Tab, Container } from 'semantic-ui-react';
+
+import { Container } from 'semantic-ui-react';
 
 export default function Index() {
-  // 編輯表單開關
-  const [open, setOpen] = useState(false);
+  // firebase 集合
+  const dbCol = db_echoway.collection('meals');
 
-  // 載入中
-  const [loading, setLoading] = useState(false);
-
-  // 資料集合
+  // 資料陣列
   const [rows, setRows] = useState([]);
 
-  // firebase 集合
-  const dbCol = db.collection('sections');
-
   // 表單預設值
-  const defalutItem = { section: '' };
+  const defalutItem = { name: '',amt:'' };
 
   // 編輯列
   const [row, setRow] = useState(defalutItem);
 
-  // 編輯列索引
+
+   // 編輯表單開關
+   const [open, setOpen] = useState(false);
+
+   // 載入中
+   const [loading, setLoading] = useState(false);
+
+   // 編輯列索引
   const [editRowIndex, setEditRowIndex] = useState(-1);
+
 
   // 取得資料
   useEffect(() => {
@@ -32,9 +35,7 @@ export default function Index() {
       const data = snapshot.docs.map((doc) => {
         return { ...doc.data(), id: doc.id };
       });
-      data.sort((a, b) => {
-        return a.section < b.section ? 1 : -1;
-      });
+
       setRows(data);
     });
   }, []);
@@ -76,6 +77,7 @@ export default function Index() {
     }
   };
 
+  
   // 刪除
   const deleteRow = (row) => {
     setLoading(true);
@@ -91,21 +93,9 @@ export default function Index() {
       });
   };
 
-  // 編輯(設定索引和編輯列)
-  const editRow = (row, index) => {
-    setEditRowIndex(index);
-    setRow(row);
-    setOpen(true);
-  };
-
   return (
     <Container>
-      <TableList
-        loading={loading}
-        deleteRow={deleteRow}
-        rows={rows}
-        editRow={editRow}
-      />
+      
       <EditForm
         open={open}
         setOpen={setOpen}

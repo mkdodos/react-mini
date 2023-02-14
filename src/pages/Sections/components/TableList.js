@@ -15,6 +15,7 @@ export default function TableList({ rows, deleteRow, editRow,loading }) {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell width={2}>期數</Table.HeaderCell>
+            <Table.HeaderCell width={2}>金額</Table.HeaderCell>
 
             <Table.HeaderCell>#</Table.HeaderCell>
           </Table.Row>
@@ -25,6 +26,7 @@ export default function TableList({ rows, deleteRow, editRow,loading }) {
             return (
               <Table.Row key={row.id}>
                 <Table.Cell>{row.section}</Table.Cell>
+                <Table.Cell>{row.amt}</Table.Cell>
                 <Table.Cell>
                   <Button
                     color="green"
