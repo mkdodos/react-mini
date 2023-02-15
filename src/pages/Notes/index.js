@@ -4,7 +4,7 @@ import { db } from '../../utils/firebase';
 import TableList from './components/TableList';
 import EditForm from './components/EditForm';
 
-import { Container, Button, Icon } from 'semantic-ui-react';
+import { Container, Button, Icon, Segment } from 'semantic-ui-react';
 
 export default function Index() {
   // firebase 集合
@@ -110,10 +110,12 @@ export default function Index() {
 
   return (
     <Container>
-      <Button onClick={newRow}>
-        <Icon name="plus" />
-        新增
-      </Button>
+      <Segment>
+        <Button onClick={newRow}>
+          <Icon name="plus" />
+          新增
+        </Button>
+      </Segment>
 
       <EditForm
         open={open}

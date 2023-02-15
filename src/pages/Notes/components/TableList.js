@@ -14,10 +14,10 @@ export default function TableList({ rows, deleteRow, editRow, loading }) {
       <Table celled selectable unstackable>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell width={2}>日期</Table.HeaderCell>
-            <Table.HeaderCell width={2}>內容</Table.HeaderCell>
+            <Table.HeaderCell width={3}>日期</Table.HeaderCell>
+            <Table.HeaderCell >內容</Table.HeaderCell>
 
-            <Table.HeaderCell>#</Table.HeaderCell>
+            <Table.HeaderCell width={2}>#</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 

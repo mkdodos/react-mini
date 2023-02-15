@@ -35,14 +35,14 @@ export default function Index() {
   const [editRowIndex, setEditRowIndex] = useState(-1);
 
   // 當期數
-  const activeSetion = '11201';
+  const [activeSection, setActiveSection] = useState('');
 
   // 表單預設值
   const defalutItem = {
     consumeDate: new Date().toISOString().slice(0, 10),
     note: '',
     amt: '',
-    section: activeSetion,
+    section: activeSection,
   };
 
   // 編輯列
@@ -57,29 +57,34 @@ export default function Index() {
 
   // 篩選
   const [filterText, setFilterText] = useState('');
-  const [filterSection, setFilterSection] = useState(activeSetion);
+  const [filterSection, setFilterSection] = useState(activeSection);
 
   const [filter, setFilter] = useState({
-    section:activeSetion
+    section: activeSection,
   });
 
   // 取得資料
   useEffect(() => {
-    dbCol.get().then((snapshot) => {
-      const data = snapshot.docs.map((doc) => {
-        return { ...doc.data(), id: doc.id };
-      });
-      setRows(data);
-      setRowsCopy(data);
+    // 取得最新期數
+    db.collection('sections')
+      .orderBy('section', 'desc')
+      .get()
+      .then((snapshot) => {
+        const section = snapshot.docs[0].data().section;
+        setActiveSection(section);
 
-      // 預設載入當期資料
-      const newData = data.slice().filter((row) => row.section == activeSetion);
-      setRows(newData);
-      // console.log(newData)
-      // 排序
-      // sortData(data).reverse()
-      // sortData(data);
-    });
+        dbCol.get().then((snapshot) => {
+          const data = snapshot.docs.map((doc) => {
+            return { ...doc.data(), id: doc.id };
+          });
+          setRows(data);
+          setRowsCopy(data);
+
+          // 預設載入當期資料
+          const newData = data.slice().filter((row) => row.section == section);
+          setRows(newData);
+        });
+      });
   }, []);
 
   // 排序
@@ -137,8 +142,8 @@ export default function Index() {
     // 關閉篩選表單
     setOpenSearch(false);
 
-    console.log(filter)
-    console.log(newData)
+    console.log(filter);
+    console.log(newData);
   };
 
   // 儲存(新增或更新)
@@ -221,7 +226,9 @@ export default function Index() {
           saveRow={saveRow}
         /> */}
 
-        <Divider horizontal>信用卡 {filter.section}</Divider>
+        <Divider horizontal>
+          信用卡 {filter.section ? filter.section : activeSection}
+        </Divider>
         <Button onClick={newRow}>
           <Icon name="plus" />
           新增
