@@ -4,7 +4,7 @@ import { db_echoway } from '../../utils/firebase';
 import TableList from './components/TableList';
 import EditForm from './components/EditForm';
 
-import { Container } from 'semantic-ui-react';
+import { Button, Container, Segment } from 'semantic-ui-react';
 
 export default function Index() {
   // firebase 集合
@@ -14,7 +14,7 @@ export default function Index() {
   const [rows, setRows] = useState([]);
 
   // 表單預設值
-  const defalutItem = { name: '', amt: '' };
+  const defalutItem = { date:new Date().toISOString().slice(0,10),name: '', amt: '' };
 
   // 編輯列
   const [row, setRow] = useState(defalutItem);
@@ -99,8 +99,16 @@ export default function Index() {
       });
   };
 
+  const newRow=()=>{
+    setOpen(true)
+  }
+
   return (
     <Container>
+      <Segment>
+      <Button onClick={newRow}>新增</Button>
+      </Segment>
+      
       <EditForm
         open={open}
         setOpen={setOpen}
@@ -111,6 +119,7 @@ export default function Index() {
         saveRow={saveRow}
         deleteRow={deleteRow}
         loading={loading}
+        editRowIndex={editRowIndex}
       />
 
       <TableList
