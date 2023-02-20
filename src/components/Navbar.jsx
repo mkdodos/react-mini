@@ -29,6 +29,11 @@ export default function Navbar() {
           記事
         </Link>
       </Menu.Item>
+      <Menu.Item name="reviews">
+        <Link className="link" to="/banks">
+          銀行帳戶
+        </Link>
+      </Menu.Item>
 
       
     </Menu>

@@ -9,6 +9,7 @@ import Credits from "./pages/Credits";
 import Sections from "./pages/Sections";
 import Meals from "./pages/Meals";
 import Notes from "./pages/Notes";
+import Banks from "./pages/Banks";
 
 import {
   createBrowserRouter,
@@ -49,6 +50,11 @@ const router = createBrowserRouter([
       {
         path: "/notes",
         element: <Notes/>
+      },
+
+      {
+        path: "/banks",
+        element: <Banks/>
       },
       
     ],
