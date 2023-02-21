@@ -8,39 +8,25 @@ import {
   Grid,
   Image,
   Card,
-  List
+  List,
+  Divider,
 } from 'semantic-ui-react';
+
+import CardList from './components/CardList';
+import CardList2 from './components/CardList2';
+
 export default function Index() {
   return (
     <div>
       <Container>
-        <Card>
-          <Card.Content>
-            <Card.Header>土銀</Card.Header>
-            <Card.Meta>
-              <span className="date">Updated in 2/20</span>
-            </Card.Meta>
-            <Card.Description>
-              
-              <List divided relaxed>
-                <List.Item>241+146=387</List.Item>
-                <List.Item>1604+6638=18242</List.Item>
-                <List.Item>83942+3991117=4075059</List.Item>
-              </List>
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <a>
-              <Icon name="usd" />
-              42,235
-            </a>
-          </Card.Content>
-        </Card>
+        <CardList />
 
+        <Divider />
         <Grid divided="vertically">
           <Grid.Row columns={2}>
             <Grid.Column>
-              <Segment padded>
+              <CardList />
+              {/* <Segment padded>
                 <Label attached="top">
                   <Header>土銀</Header>
                 </Label>
@@ -48,15 +34,10 @@ export default function Index() {
                 <Label as="a" color="teal" tag>
                   2/20
                 </Label>
-              </Segment>
+              </Segment> */}
             </Grid.Column>
             <Grid.Column>
-              <Segment padded>
-                <Header>玉山</Header>
-                <Label color="blue">
-                  <Icon name="mail" /> 2/23
-                </Label>
-              </Segment>
+             <CardList2/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -66,6 +47,12 @@ export default function Index() {
             <Header.Subheader>$10.99</Header.Subheader>
           </Header>
         </Segment>
+        <Segment padded>
+                <Header>玉山</Header>
+                <Label color="blue">
+                  <Icon name="mail" /> 2/23
+                </Label>
+              </Segment>
       </Container>
     </div>
   );
