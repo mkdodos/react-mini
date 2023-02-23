@@ -14,6 +14,7 @@ import {
 
 import CardList from './components/CardList';
 import CardList2 from './components/CardList2';
+import CardTable from './components/CardTable';
 
 export default function Index() {
   return (
@@ -23,21 +24,15 @@ export default function Index() {
 
         <Divider />
         <Grid divided="vertically">
-          <Grid.Row columns={2}>
+          <Grid.Row columns={3}>
             <Grid.Column>
-              <CardList />
-              {/* <Segment padded>
-                <Label attached="top">
-                  <Header>土銀</Header>
-                </Label>
-                241+146=387
-                <Label as="a" color="teal" tag>
-                  2/20
-                </Label>
-              </Segment> */}
+              <CardList />             
             </Grid.Column>
             <Grid.Column>
              <CardList2/>
+            </Grid.Column>
+            <Grid.Column>
+             <CardTable/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
