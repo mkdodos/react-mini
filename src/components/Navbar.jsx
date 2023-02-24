@@ -34,6 +34,11 @@ export default function Navbar() {
           銀行帳戶
         </Link>
       </Menu.Item>
+      <Menu.Item name="reviews">
+        <Link className="link" to="/car-routes">
+          派車記錄
+        </Link>
+      </Menu.Item>
 
       
     </Menu>
