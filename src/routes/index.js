@@ -11,7 +11,8 @@ import Meals from '../pages/Meals';
 import Notes from '../pages/Notes';
 import Banks from '../pages/Banks';
 
-import CarRoutes from '../pages/CarRoutes';
+
+import echoway from './echoway';
 
 const Layout = () => {
   return (
@@ -49,10 +50,11 @@ const router = createBrowserRouter([
         path: '/banks',
         element: <Banks />,
       },
-      {
-        path: '/car-routes',
-        element: <CarRoutes />,
-      },
+      echoway
+      // {
+      //   path: '/car-routes',
+      //   element: <CarRoutes />,
+      // },
     ],
   },
   {
