@@ -24,8 +24,8 @@ export default function CardTable({row,child}) {
       <Card>
         <Card.Content>
           <Card.Header>
-            <List.Icon color={row.color} name="github" size="large" verticalAlign="middle" />
-            {row.name}
+            <List.Icon  name="github" size="large" verticalAlign="middle" />
+            
           </Card.Header>
           <Card.Meta>
             <span className="date">Updated in 2/20</span>

@@ -11,6 +11,7 @@ import {
 export default function TableList({ rows, deleteRow, editRow, loading }) {
   return (
     <div>
+      {/* {rows[0].id} */}
       <Table celled selectable unstackable>
         <Table.Header>
           <Table.Row>

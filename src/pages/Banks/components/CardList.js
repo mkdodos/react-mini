@@ -14,7 +14,7 @@ import {
 export default function CardList() {
   return (
     <div>
-      <Card>
+      <Card color='red'>
         <Card.Content>
           <Card.Header>帳戶</Card.Header>
           <Card.Meta>
