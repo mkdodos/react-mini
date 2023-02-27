@@ -16,31 +16,54 @@ export default function CardList() {
     <div>
       <Card>
         <Card.Content>
-          <Card.Header>土銀</Card.Header>
+          <Card.Header>帳戶</Card.Header>
           <Card.Meta>
             <span className="date">Updated in 2/20</span>
           </Card.Meta>
           <Card.Description>
-            <List divided relaxed>
+            <List divided relaxed horizontal>
               <List.Item>
                 <List.Icon name="github" size="large" verticalAlign="middle" />
-                241+146=387
+                土地銀行
+              </List.Item>
+
+              <List.Item>145600</List.Item>
+            </List>
+            <List divided relaxed horizontal>
+              <List.Item>
+                <List.Icon name="github" size="large" verticalAlign="middle" />
+                玉山銀行
+              </List.Item>
+              <List.Item>789000</List.Item>
+            </List>
+
+            <List divided relaxed horizontal>
+              <List.Item>
+                <List.Icon name="github" size="large" verticalAlign="middle" />
+                中國信託
+              </List.Item>
+              <List.Item>7890</List.Item>
+            </List>
+
+            {/* <List divided relaxed>
+              <List.Item>
+                <List.Icon name="github" size="large" verticalAlign="middle" />
+                土地銀行
               </List.Item>
               <List.Item>
-              <List.Icon name="github" size="large" verticalAlign="middle" />
-                1604+6638=18242</List.Item>
+                <List.Icon name="github" size="large" verticalAlign="middle" />
+                玉山銀行
+              </List.Item>
               <List.Item>
-              <List.Icon name="github" size="large" verticalAlign="middle" />
-                83942+3991117=4075059</List.Item>
-            </List>
+                <List.Icon name="github" size="large" verticalAlign="middle" />
+                中國信託
+              </List.Item>
+            </List> */}
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-         
-            <Icon name="usd" />
-            <Header> 42,235</Header>
-           
-        
+          <Icon name="usd" />
+          42,235
         </Card.Content>
       </Card>
     </div>
