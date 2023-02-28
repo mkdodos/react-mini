@@ -39,7 +39,7 @@ export default function Layout() {
   return (
     <Container>
       <Segment placeholder>
-        <Grid columns={3} relaxed="very">
+        <Grid columns={2} relaxed="very">
           <Grid.Column>
             <CardList />
           </Grid.Column>
@@ -49,9 +49,9 @@ export default function Layout() {
             {row.amt ? <Isun row={row} /> : <Loader active inline="centered" />}
             <Family row={row} />
           </Grid.Column>
-          <Grid.Column>
+          {/* <Grid.Column>
             <AccordianDemo/>
-          </Grid.Column>
+          </Grid.Column> */}
         </Grid>
 
         {/* <Divider vertical>
