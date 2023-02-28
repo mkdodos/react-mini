@@ -1,4 +1,4 @@
-.auth{
+/* .auth{
   background-color: #b9e7e7;
   height: 100vh;
   display: flex;
@@ -11,7 +11,7 @@ h1{
   font-size: 18px;
   margin-bottom: 20px;
   color: teal;
-}
+} */
 
 /* form{
   width: 200px;
@@ -37,13 +37,13 @@ input{
   cursor: pointer;
 } */
 
-span{
+/* span{
   font-size: 12px;
   text-align: center;
-}
+} */
 
-p{
+/* p{
   font-size: 12px;
   text-align: center;
   color:red;
-}
+} */
