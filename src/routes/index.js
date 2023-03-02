@@ -10,7 +10,8 @@ import Sections from '../pages/Sections';
 import Meals from '../pages/Meals';
 import Notes from '../pages/Notes';
 import Banks from '../pages/Banks';
-
+import Oil from '../pages/Oil'
+import Balances from '../pages/Balances'
 
 import echoway from './echoway';
 
@@ -49,6 +50,14 @@ const router = createBrowserRouter([
       {
         path: '/banks',
         element: <Banks />,
+      },
+      {
+        path: '/oil',
+        element: <Oil />,
+      },
+      {
+        path: '/balances',
+        element: <Balances />,
       },
       echoway
       // {

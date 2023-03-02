@@ -40,6 +40,18 @@ export default function Navbar() {
         </Link>
       </Menu.Item>
 
+      <Menu.Item name="reviews">
+        <Link className="link" to="/oil">
+          加油
+        </Link>
+      </Menu.Item>
+
+      <Menu.Item name="reviews">
+        <Link className="link" to="/balances">
+          記帳
+        </Link>
+      </Menu.Item>
+
       
     </Menu>
   );
