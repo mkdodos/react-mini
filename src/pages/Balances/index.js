@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Container, Input } from 'semantic-ui-react';
+import { useEffect, useState, useRef } from 'react';
+import { Container, Input, Button } from 'semantic-ui-react';
 import TableList from './components/TableList';
 import { db } from '../../utils/firebase';
 
@@ -17,7 +17,10 @@ export default function Index() {
   const [loading, setLoading] = useState(false);
 
   // 筆數
-  const [rowsCount, setRowsCount] = useState(20);
+  const [rowsCount, setRowsCount] = useState(10);
+
+  // 最後一筆
+  const lastSnapshot = useRef();
 
   // 取得資料
   useEffect(() => {
@@ -28,9 +31,14 @@ export default function Index() {
       .then((snapshot) => {
         let data = snapshot.docs.map((doc) => {
           return { ...doc.data(), id: doc.id };
-        });       
+        });
         setRows(data);
         setRowsFilter(data);
+        // 最後一筆
+        // const last = snapshot.docs[snapshot.docs.length-1]
+        lastSnapshot.current = snapshot.docs[snapshot.docs.length - 1];
+        // console.log(lastSnapshot.current);
+        // snapshot.docs()
       });
   }, []);
 
@@ -43,9 +51,31 @@ export default function Index() {
     setRows(rowsFilter);
   };
 
+  // 載入更多
+  const loadMore = (e) => {
+    dbCol
+      .orderBy('date', 'desc')
+      .limit(rowsCount)
+      .startAfter(lastSnapshot.current)
+      .get()
+      .then((snapshot) => {
+        let data = snapshot.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        });
+        setRows([...rows,...data])
+        setRowsFilter([...rows,...data])
+        console.log(data);
+        lastSnapshot.current = snapshot.docs[snapshot.docs.length - 1];
+      });
+
+   
+  };
+
   return (
     <Container>
       <Input onChange={filterData} />
+
+      <Button onClick={loadMore}>載入更多</Button>
 
       <TableList loading={loading} rows={rows} />
     </Container>
