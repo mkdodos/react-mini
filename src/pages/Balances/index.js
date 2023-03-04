@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Container, Input, Button } from 'semantic-ui-react';
+import { Container, Input, Button, Menu, Icon } from 'semantic-ui-react';
 import TableList from './components/TableList';
 import { db } from '../../utils/firebase';
 
@@ -13,11 +13,17 @@ export default function Index() {
   // 篩選用資料陣列
   let [rowsFilter, setRowsFilter] = useState([]);
 
+  // 分頁用資料陣列
+  let [rowsPage, setRowsPage] = useState([]);
+
   // 載入中
   const [loading, setLoading] = useState(false);
 
   // 筆數
-  const [rowsCount, setRowsCount] = useState(10);
+  const [rowsCount, setRowsCount] = useState(5);
+
+  // 目前頁數
+  const [currentPage, setCurrentPage] = useState(1);
 
   // 最後一筆
   const lastSnapshot = useRef();
@@ -33,11 +39,49 @@ export default function Index() {
           return { ...doc.data(), id: doc.id };
         });
         setRows(data);
+
         setRowsFilter(data);
-        // 最後一筆        
-        lastSnapshot.current = snapshot.docs[snapshot.docs.length - 1];      
+        setRowsPage(data);
+
+        // 分頁
+        // const totalRows = data.length;
+        // const rowsPerPage = 5;
+        // const pages = totalRows / rowsPerPage;       
+        // const pageBegin = (currentPage - 1) * rowsPerPage;
+        // const pageEnd = pageBegin + rowsPerPage;
+        // const pageRow = data.slice(pageBegin, pageEnd);       
+        // setRows(pageRow);
+        
+
+        // 最後一筆
+        lastSnapshot.current = snapshot.docs[snapshot.docs.length - 1];
       });
   }, []);
+
+  // // 取得資料
+  // useEffect(() => {
+  //   // 分頁
+  //   const totalRows = rows.length;
+  //   const rowsPerPage = 5;
+  //   const pages = totalRows / rowsPerPage;   
+  //   const pageBegin = (currentPage - 1) * rowsPerPage;
+  //   const pageEnd = pageBegin + rowsPerPage;
+  //   const pageRow = rowsFilter.slice(pageBegin, pageEnd);   
+  //   setRows(pageRow);     
+  // }, [currentPage]);
+
+  // 分頁
+  const handlePageChanged = (e, { content }) => {
+    const rowsPerPage = 5;
+    const totalRows = rows.length;
+    const pages = totalRows / rowsPerPage;   
+    const pageBegin = (content - 1) * rowsPerPage;
+    const pageEnd = pageBegin + rowsPerPage;
+    const pageRow = rowsPage.slice(pageBegin, pageEnd);   
+    setRows(pageRow);     
+    // setCurrentPage(content);
+    console.log(pageBegin)
+  };
 
   const filterData = (e) => {
     // 篩選資料
@@ -51,7 +95,7 @@ export default function Index() {
   // 載入更多
   // 記錄最後一筆的snapshot
   // 搭配用 startAfter
-  // 每次從最後一筆之後取出資料加入原陣列 
+  // 每次從最後一筆之後取出資料加入原陣列
   const loadMore = (e) => {
     dbCol
       .orderBy('date', 'desc')
@@ -62,12 +106,16 @@ export default function Index() {
         let data = snapshot.docs.map((doc) => {
           return { ...doc.data(), id: doc.id };
         });
-        setRows([...rows,...data])
-        setRowsFilter([...rows,...data])       
+        setRows([...rows, ...data]);
+        setRowsFilter([...rowsFilter, ...data]);
+        setRowsPage([...rowsPage, ...data]);
         lastSnapshot.current = snapshot.docs[snapshot.docs.length - 1];
+
+        
+        // setCurrentPage(2);
       });
 
-   
+      // console.log(rows)
   };
 
   return (
@@ -76,7 +124,24 @@ export default function Index() {
 
       <Button onClick={loadMore}>載入更多</Button>
 
-      <TableList loading={loading} rows={rows} />
+      <Menu floated="right" pagination>
+        <Menu.Item as="a" icon>
+          <Icon name="chevron left" />
+        </Menu.Item>
+        <Menu.Item as="a" onClick={handlePageChanged} content="1">
+          1
+        </Menu.Item>
+        <Menu.Item as="a" content="2" onClick={handlePageChanged}>
+          2
+        </Menu.Item>
+        <Menu.Item as="a" content="3" onClick={handlePageChanged}>3</Menu.Item>
+        <Menu.Item as="a" content="4" onClick={handlePageChanged}>4</Menu.Item>
+      
+        <Menu.Item as="a" icon>
+          <Icon name="chevron right" />
+        </Menu.Item>
+      </Menu>
+      <TableList loading={loading} rows={rows} setRows={setRows} />
     </Container>
   );
 }
