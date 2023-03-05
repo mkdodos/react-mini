@@ -17,20 +17,18 @@ export default function TableList({
   loading,
 }) {
   useEffect(() => {
-    const totalRows = rows.length;
-    const rowsPerPage = 5;
-    const pages = totalRows / rowsPerPage;
+    // const totalRows = rows.length;
+    // const rowsPerPage = 5;
+    // const pages = totalRows / rowsPerPage;
     // console.log(pages)
-    const currentPage = 2;
-    const pageBegin = (currentPage - 1) * rowsPerPage;
-    const pageEnd = pageBegin + rowsPerPage;
-    const pageRow = rows.slice(pageBegin, pageEnd);
+    // const currentPage = 2;
+    // const pageBegin = (currentPage - 1) * rowsPerPage;
+    // const pageEnd = pageBegin + rowsPerPage;
+    // const pageRow = rows.slice(pageBegin, pageEnd);
 
-    console.log(pageBegin);
-    console.log(pageEnd);
-    setRows(pageRow);
-    console.log(rows);
-    console.log(pageRow);
+   
+    // setRows(pageRow);
+   
   }, []);
 
   return (
@@ -39,14 +37,14 @@ export default function TableList({
       <Table celled selectable unstackable>
         <Table.Header>
           <Table.Row>
-          <Table.HeaderCell></Table.HeaderCell>
+          {/* <Table.HeaderCell></Table.HeaderCell> */}
             <Table.HeaderCell>日期</Table.HeaderCell>
             <Table.HeaderCell>類別</Table.HeaderCell>
             <Table.HeaderCell>項目</Table.HeaderCell>
             <Table.HeaderCell>收入</Table.HeaderCell>
             <Table.HeaderCell>支出</Table.HeaderCell>
 
-            <Table.HeaderCell>#</Table.HeaderCell>
+            {/* <Table.HeaderCell>#</Table.HeaderCell> */}
           </Table.Row>
         </Table.Header>
 
@@ -54,7 +52,7 @@ export default function TableList({
           {rows.map((row, index) => {
             return (
               <Table.Row key={row.id}>
-                <Table.Cell>{index}</Table.Cell>
+                {/* <Table.Cell>{index}</Table.Cell> */}
                 <Table.Cell>{row.date}</Table.Cell>
                 <Table.Cell>
                   <Label>{row.cate}</Label>
@@ -62,7 +60,7 @@ export default function TableList({
                 <Table.Cell>{row.title}</Table.Cell>
                 <Table.Cell>{row.income}</Table.Cell>
                 <Table.Cell>{row.expense}</Table.Cell>
-                <Table.Cell>
+                {/* <Table.Cell>
                   <Button
                     color="green"
                     basic
@@ -70,13 +68,13 @@ export default function TableList({
                   >
                     Edit
                   </Button>
-                </Table.Cell>
+                </Table.Cell> */}
               </Table.Row>
             );
           })}
         </Table.Body>
 
-        <Table.Footer>
+        {/* <Table.Footer>
           <Table.Row>
             <Table.HeaderCell colSpan="3">
               <Menu floated="right" pagination>
@@ -93,7 +91,7 @@ export default function TableList({
               </Menu>
             </Table.HeaderCell>
           </Table.Row>
-        </Table.Footer>
+        </Table.Footer> */}
       </Table>
     </div>
   );

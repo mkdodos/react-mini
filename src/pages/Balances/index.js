@@ -16,11 +16,14 @@ export default function Index() {
   // 分頁用資料陣列
   let [rowsPage, setRowsPage] = useState([]);
 
+  // 每頁筆數
+  const rowsPerPage = 10;
+
   // 載入中
   const [loading, setLoading] = useState(false);
 
   // 筆數
-  const [rowsCount, setRowsCount] = useState(5);
+  // const [rowsCount, setRowsCount] = useState(5);
 
   // 目前頁數
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +35,7 @@ export default function Index() {
   useEffect(() => {
     dbCol
       .orderBy('date', 'desc')
-      .limit(rowsCount)
+      .limit(rowsPerPage)
       .get()
       .then((snapshot) => {
         let data = snapshot.docs.map((doc) => {
@@ -46,12 +49,11 @@ export default function Index() {
         // 分頁
         // const totalRows = data.length;
         // const rowsPerPage = 5;
-        // const pages = totalRows / rowsPerPage;       
+        // const pages = totalRows / rowsPerPage;
         // const pageBegin = (currentPage - 1) * rowsPerPage;
         // const pageEnd = pageBegin + rowsPerPage;
-        // const pageRow = data.slice(pageBegin, pageEnd);       
+        // const pageRow = data.slice(pageBegin, pageEnd);
         // setRows(pageRow);
-        
 
         // 最後一筆
         lastSnapshot.current = snapshot.docs[snapshot.docs.length - 1];
@@ -63,24 +65,24 @@ export default function Index() {
   //   // 分頁
   //   const totalRows = rows.length;
   //   const rowsPerPage = 5;
-  //   const pages = totalRows / rowsPerPage;   
+  //   const pages = totalRows / rowsPerPage;
   //   const pageBegin = (currentPage - 1) * rowsPerPage;
   //   const pageEnd = pageBegin + rowsPerPage;
-  //   const pageRow = rowsFilter.slice(pageBegin, pageEnd);   
-  //   setRows(pageRow);     
+  //   const pageRow = rowsFilter.slice(pageBegin, pageEnd);
+  //   setRows(pageRow);
   // }, [currentPage]);
 
   // 分頁
   const handlePageChanged = (e, { content }) => {
-    const rowsPerPage = 5;
+    // const rowsPerPage = 5;
     const totalRows = rows.length;
-    const pages = totalRows / rowsPerPage;   
+    const pages = totalRows / rowsPerPage;
     const pageBegin = (content - 1) * rowsPerPage;
     const pageEnd = pageBegin + rowsPerPage;
-    const pageRow = rowsPage.slice(pageBegin, pageEnd);   
-    setRows(pageRow);     
+    const pageRow = rowsPage.slice(pageBegin, pageEnd);
+    setRows(pageRow);
     // setCurrentPage(content);
-    console.log(pageBegin)
+    console.log(pageBegin);
   };
 
   const filterData = (e) => {
@@ -99,27 +101,36 @@ export default function Index() {
   const loadMore = (e) => {
     dbCol
       .orderBy('date', 'desc')
-      .limit(rowsCount)
+      .limit(rowsPerPage)
       .startAfter(lastSnapshot.current)
       .get()
       .then((snapshot) => {
         let data = snapshot.docs.map((doc) => {
           return { ...doc.data(), id: doc.id };
         });
-        setRows([...rows, ...data]);
+        // setRows([...rows, ...data]);
+        setRows(data);
         setRowsFilter([...rowsFilter, ...data]);
         setRowsPage([...rowsPage, ...data]);
         lastSnapshot.current = snapshot.docs[snapshot.docs.length - 1];
 
-        
         // setCurrentPage(2);
       });
 
-      // console.log(rows)
+    // console.log(rows)
   };
 
+  let menuItems = [];
+  for (let i = 1; i <= Math.ceil(rowsPage.length / rowsPerPage); i++) {
+    menuItems.push(
+      <Menu.Item as="a" onClick={handlePageChanged} content={i}>
+        {i}
+      </Menu.Item>
+    );
+  }
   return (
     <Container>
+      {/* {Math.ceil(rowsPage.length / rowsPerPage)} */}
       <Input onChange={filterData} />
 
       <Button onClick={loadMore}>載入更多</Button>
@@ -128,15 +139,21 @@ export default function Index() {
         <Menu.Item as="a" icon>
           <Icon name="chevron left" />
         </Menu.Item>
-        <Menu.Item as="a" onClick={handlePageChanged} content="1">
+
+        {menuItems}
+        {/* <Menu.Item as="a" onClick={handlePageChanged} content="1">
           1
         </Menu.Item>
         <Menu.Item as="a" content="2" onClick={handlePageChanged}>
           2
         </Menu.Item>
-        <Menu.Item as="a" content="3" onClick={handlePageChanged}>3</Menu.Item>
-        <Menu.Item as="a" content="4" onClick={handlePageChanged}>4</Menu.Item>
-      
+        <Menu.Item as="a" content="3" onClick={handlePageChanged}>
+          3
+        </Menu.Item>
+        <Menu.Item as="a" content="4" onClick={handlePageChanged}>
+          4
+        </Menu.Item> */}
+
         <Menu.Item as="a" icon>
           <Icon name="chevron right" />
         </Menu.Item>
