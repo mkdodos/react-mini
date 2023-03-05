@@ -20,8 +20,8 @@ export default function Index() {
   const rowsPerPage = 10;
 
   // 載入中
-  const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(false);  
+  
   // 筆數
   // const [rowsCount, setRowsCount] = useState(5);
 
@@ -74,6 +74,7 @@ export default function Index() {
 
   // 分頁
   const handlePageChanged = (e, { content }) => {
+
     // const rowsPerPage = 5;
     const totalRows = rows.length;
     const pages = totalRows / rowsPerPage;
@@ -81,8 +82,8 @@ export default function Index() {
     const pageEnd = pageBegin + rowsPerPage;
     const pageRow = rowsPage.slice(pageBegin, pageEnd);
     setRows(pageRow);
-    // setCurrentPage(content);
-    console.log(pageBegin);
+    setCurrentPage(content);
+    
   };
 
   const filterData = (e) => {
@@ -114,17 +115,20 @@ export default function Index() {
         setRowsPage([...rowsPage, ...data]);
         lastSnapshot.current = snapshot.docs[snapshot.docs.length - 1];
 
-        // setCurrentPage(2);
+        // 頁碼跳至最後一頁
+        setCurrentPage(Math.ceil(rowsPage.length / rowsPerPage)+1);
       });
 
     // console.log(rows)
   };
 
+  // 組合分頁條
   let menuItems = [];
   for (let i = 1; i <= Math.ceil(rowsPage.length / rowsPerPage); i++) {
     menuItems.push(
-      <Menu.Item as="a" onClick={handlePageChanged} content={i}>
+      <Menu.Item color='orange' active={currentPage==i} as="a" onClick={handlePageChanged} content={i}>
         {i}
+        {/* <Icon name='gamepad' /> */}
       </Menu.Item>
     );
   }
@@ -135,7 +139,7 @@ export default function Index() {
 
       <Button onClick={loadMore}>載入更多</Button>
 
-      <Menu floated="right" pagination>
+      <Menu floated="right" pagination >
         <Menu.Item as="a" icon>
           <Icon name="chevron left" />
         </Menu.Item>
