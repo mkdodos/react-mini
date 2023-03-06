@@ -17,7 +17,7 @@ export default function Index() {
   let [rowsPage, setRowsPage] = useState([]);
 
   // 每頁筆數
-  const rowsPerPage = 10;
+  const rowsPerPage = 100;
 
   // 載入中
   const [loading, setLoading] = useState(false);  

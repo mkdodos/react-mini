@@ -3,8 +3,10 @@ import { db_echoway } from '../../utils/firebase';
 
 import TableList from './components/TableList';
 import EditForm from './components/EditForm';
+import Dashboard from './components/Dashboard';
 
 import { Button, Container, Segment } from 'semantic-ui-react';
+
 
 export default function Index() {
   // firebase 集合
@@ -103,8 +105,13 @@ export default function Index() {
     setOpen(true)
   }
 
+  
+
   return (
     <Container>
+      
+      <Dashboard rows={rows} />
+
       <Segment>
       <Button onClick={newRow}>新增</Button>
       </Segment>

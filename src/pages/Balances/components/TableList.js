@@ -40,7 +40,7 @@ export default function TableList({
           {/* <Table.HeaderCell></Table.HeaderCell> */}
             <Table.HeaderCell>日期</Table.HeaderCell>
             <Table.HeaderCell>類別</Table.HeaderCell>
-            <Table.HeaderCell>項目</Table.HeaderCell>
+            <Table.HeaderCell width={8}>項目</Table.HeaderCell>
             <Table.HeaderCell>收入</Table.HeaderCell>
             <Table.HeaderCell>支出</Table.HeaderCell>
 
