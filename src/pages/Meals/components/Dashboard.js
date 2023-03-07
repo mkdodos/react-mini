@@ -1,9 +1,31 @@
-import React from 'react';
-import { Card, List, Table, Image, Header, Segment,Statistic } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import {
+  Card,
+  List,
+  Table,
+  Image,
+  Header,
+  Segment,
+  Statistic,
+} from 'semantic-ui-react';
+import axios from 'axios';
 
 export default function Dashboard({ rows }) {
   // 人員
-  const employees = ['馬', '陳', '林'];
+  // const employees = ['馬', '陳', '林'];
+  const [employees, setEmployees] = useState([]);
+
+  const url = 'http://localhost:8888/pdo-salary/employee/read.php';
+
+  useEffect(() => {
+    axios.get(url).then((res) => {
+      const data = res.data.map((emp) => {
+        return emp.name;
+      });
+      setEmployees(data);
+      // console.log(data);
+    });
+  }, []);
 
   // 計算人員加總金額
   const calEmpTotal = (emp) => {
@@ -28,7 +50,9 @@ export default function Dashboard({ rows }) {
   // 人員金額加總列表
   const lists = [];
   employees.forEach((emp) => {
-    lists.push({ name: emp, total: calEmpTotal(emp) });
+    // 有金額才加入
+    if (calEmpTotal(emp) > 0)
+      lists.push({ name: emp, total: calEmpTotal(emp) });
   });
 
   return (
@@ -38,8 +62,8 @@ export default function Dashboard({ rows }) {
           <Card.Header>
             <Segment>
               {/* 合計:{calTotal()} */}
-            
-            <Statistic  size='mini' horizontal  value={calTotal()} />
+
+              <Statistic size="mini" horizontal value={calTotal()} />
             </Segment>
           </Card.Header>
           <Card.Description>

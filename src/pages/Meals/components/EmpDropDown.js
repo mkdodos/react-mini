@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 
-export default function EmpDropDown() {
+export default function EmpDropDown({value,onChange}) {
   const url = 'http://localhost:8888/pdo-salary/employee/read.php';
 
   const [rows,setRows]=useState([])
@@ -15,25 +15,21 @@ export default function EmpDropDown() {
       console.log(data);
     });
   }, []);
-  const friendOptions = [
-    {
-      key: 'Jenny Hess',
-      text: 'Jenny Hess',
-      value: 'Jenny Hess',
-    },
-  ];
+  
 
-  const handleChange = (e, { value }) => {
-    console.log(value);
-  };
+  // const handleChange = (e, { value }) => {
+  //   console.log(value);
+  // };
   return (
     <div>
       <Dropdown
-        placeholder="Select Friend"
+        placeholder="選取人員"
         fluid
         selection
+        search
         options={rows}
-        onChange={handleChange}
+        value={value}        
+        onChange={onChange}
       />
     </div>
   );

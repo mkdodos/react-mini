@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Form, Button, Modal } from 'semantic-ui-react';
+import EmpDropDown from './EmpDropDown';
 
 export default function EditForm({
   rows,
@@ -19,6 +20,10 @@ export default function EditForm({
     setRow({ ...row, [e.target.name]: e.target.value });
   };
 
+  const empChange = (e, { value }) => {
+    setRow({ ...row, name: value });
+  };
+
   return (
     <div>
       <Modal open={open} closeIcon onClose={() => setOpen(false)}>
@@ -34,9 +39,14 @@ export default function EditForm({
                 name="date"
               />
             </Form.Field>
-            <Form.Field>
+            {/* <Form.Field>
               <label>姓名</label>
               <input value={row.name} onChange={inputChange} name="name" />
+            </Form.Field> */}
+
+            <Form.Field>
+              <label>姓名</label>
+              <EmpDropDown value={row.name} onChange={empChange} />
             </Form.Field>
 
             <Form.Field>

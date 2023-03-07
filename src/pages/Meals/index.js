@@ -112,7 +112,7 @@ export default function Index() {
     <Container>
       <Dashboard rows={rows} />
 
-      <EmpDropDown />
+      {/* <EmpDropDown /> */}
       <Segment>
         <Button onClick={newRow}>新增</Button>
       </Segment>
