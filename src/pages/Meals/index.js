@@ -5,6 +5,7 @@ import TableList from './components/TableList';
 import EditForm from './components/EditForm';
 import Dashboard from './components/Dashboard';
 import MonthDropDown from './components/MonthDropDown';
+import DaySegment from './components/DaySegment';
 
 import { Button, Container, Segment } from 'semantic-ui-react';
 
@@ -137,6 +138,7 @@ export default function Index() {
 
   return (
     <Container>
+      <DaySegment rows={rows} />
       <Dashboard rows={rows} />
 
       <MonthDropDown onChange={handleMonthChange} />
