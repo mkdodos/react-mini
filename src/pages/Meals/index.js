@@ -4,7 +4,7 @@ import { db_echoway } from '../../utils/firebase';
 import TableList from './components/TableList';
 import EditForm from './components/EditForm';
 import Dashboard from './components/Dashboard';
-import EmpDropDown from './components/EmpDropDown';
+import MonthDropDown from './components/MonthDropDown';
 
 import { Button, Container, Segment } from 'semantic-ui-react';
 
@@ -34,16 +34,31 @@ export default function Index() {
   // 編輯列索引
   const [editRowIndex, setEditRowIndex] = useState(-1);
 
+  // 篩選
+  const [queryMonth, setQueryMonth] = useState('02');
   // 取得資料
   useEffect(() => {
-    dbCol.get().then((snapshot) => {
-      const data = snapshot.docs.map((doc) => {
-        return { ...doc.data(), id: doc.id };
-      });
+    const queryDateBegin = '2023-' + queryMonth + '-01';
+    const queryDateEnd = '2023-' + queryMonth + '-31';
+    dbCol
+      .where('date', '>=', queryDateBegin)
+      .where('date', '<=', queryDateEnd)
+      .get()
+      .then((snapshot) => {
+        const data = snapshot.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        });
 
-      setRows(data);
-    });
-  }, []);
+        setRows(data);
+      });
+    // dbCol.get().then((snapshot) => {
+    //   const data = snapshot.docs.map((doc) => {
+    //     return { ...doc.data(), id: doc.id };
+    //   });
+
+    //   setRows(data);
+    // });
+  }, [queryMonth]);
 
   // 編輯(設定索引和編輯列)
   const editRow = (row, index) => {
@@ -79,7 +94,7 @@ export default function Index() {
         // 將資料加到表格中,包含剛新增的id,做為刪除之用
         // setRows([...rows, { ...row, id: doc.id }]);
         setRows(newRows);
-        console.log('add');
+
         // 設為初始值
         setRow(defalutItem);
         setEditRowIndex(-1);
@@ -99,20 +114,32 @@ export default function Index() {
         const newRows = rows.slice();
         newRows.splice(editRowIndex, 1);
         setRows(newRows);
+
+        // 設為初始值
+        setRow(defalutItem);
+        setEditRowIndex(-1);
         setOpen(false);
         setLoading(false);
       });
   };
 
   const newRow = () => {
+    // 設為初始值(有可能按了編輯沒儲存,再按新增時,需要做此動作)
+    setRow(defalutItem);
+    setEditRowIndex(-1);
     setOpen(true);
+  };
+
+  const handleMonthChange = (e, { value }) => {
+    setQueryMonth(value);
+    console.log(value);
   };
 
   return (
     <Container>
       <Dashboard rows={rows} />
 
-      {/* <EmpDropDown /> */}
+      <MonthDropDown onChange={handleMonthChange} />
       <Segment>
         <Button onClick={newRow}>新增</Button>
       </Segment>

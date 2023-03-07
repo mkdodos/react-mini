@@ -79,7 +79,7 @@ export default function Dashboard({ rows }) {
                 <Table.Body>
                   {lists.map((row) => {
                     return (
-                      <Table.Row>
+                      <Table.Row key={row.name}>
                         <Table.Cell>
                           <Header as="h4" image>
                             <Header.Content>{row.name}</Header.Content>
