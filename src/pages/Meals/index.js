@@ -4,9 +4,9 @@ import { db_echoway } from '../../utils/firebase';
 import TableList from './components/TableList';
 import EditForm from './components/EditForm';
 import Dashboard from './components/Dashboard';
+import EmpDropDown from './components/EmpDropDown';
 
 import { Button, Container, Segment } from 'semantic-ui-react';
-
 
 export default function Index() {
   // firebase 集合
@@ -16,7 +16,11 @@ export default function Index() {
   const [rows, setRows] = useState([]);
 
   // 表單預設值
-  const defalutItem = { date:new Date().toISOString().slice(0,10),name: '', amt: '' };
+  const defalutItem = {
+    date: new Date().toISOString().slice(0, 10),
+    name: '',
+    amt: '',
+  };
 
   // 編輯列
   const [row, setRow] = useState(defalutItem);
@@ -40,7 +44,6 @@ export default function Index() {
       setRows(data);
     });
   }, []);
-
 
   // 編輯(設定索引和編輯列)
   const editRow = (row, index) => {
@@ -101,21 +104,19 @@ export default function Index() {
       });
   };
 
-  const newRow=()=>{
-    setOpen(true)
-  }
-
-  
+  const newRow = () => {
+    setOpen(true);
+  };
 
   return (
     <Container>
-      
       <Dashboard rows={rows} />
 
+      <EmpDropDown />
       <Segment>
-      <Button onClick={newRow}>新增</Button>
+        <Button onClick={newRow}>新增</Button>
       </Segment>
-      
+
       <EditForm
         open={open}
         setOpen={setOpen}

@@ -44,7 +44,7 @@ export default function Dashboard({ rows }) {
           </Card.Header>
           <Card.Description>
             <Segment>
-              <Table basic="very" celled collapsing>
+              <Table basic="very" celled collapsing unstackable>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>姓名</Table.HeaderCell>
