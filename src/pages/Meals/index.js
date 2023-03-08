@@ -138,7 +138,7 @@ export default function Index() {
 
   return (
     <Container>
-      <DaySegment rows={rows} />
+      <DaySegment rows={rows} queryMonth={queryMonth} />
       <Dashboard rows={rows} />
 
       <MonthDropDown onChange={handleMonthChange} />
