@@ -7,7 +7,7 @@ import Dashboard from './components/Dashboard';
 import MonthDropDown from './components/MonthDropDown';
 import DaySegment from './components/DaySegment';
 
-import { Button, Container, Segment } from 'semantic-ui-react';
+import { Button, Container, Divider, Segment } from 'semantic-ui-react';
 
 export default function Index() {
   // firebase 集合
@@ -138,10 +138,12 @@ export default function Index() {
 
   return (
     <Container>
+      <MonthDropDown onChange={handleMonthChange} />
+      <Divider/>
       <DaySegment rows={rows} queryMonth={queryMonth} />
       <Dashboard rows={rows} />
 
-      <MonthDropDown onChange={handleMonthChange} />
+     
       <Segment>
         <Button onClick={newRow}>新增</Button>
       </Segment>
