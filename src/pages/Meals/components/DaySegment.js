@@ -43,28 +43,18 @@ export default function DaySegment({ rows, queryMonth }) {
     return total;
   };
 
-  const abc = (index) => {
+  // 組合每一列的欄位資料
+  const dayColumns = (index, columnsCount) => {
     let dd = [];
-    // for (let i = 0; i < 10; i++) {
-    //   dd.push(
-    //     <Grid.Column>
-    //       <Segment>{i}</Segment>
-    //     </Grid.Column>
-    //   );
-    // }
 
-    //
-
-    daysData.slice(index, index + 3).map((day, index) => {
+    daysData.slice(index, index + columnsCount).map((day, index) => {
       dd.push(
         <Grid.Column>
-          {/* <Segment></Segment> */}
           <Segment>
             <Table celled>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>{day[0].date}</Table.HeaderCell>
-                 
                   <Table.HeaderCell>{calTotal(day)}</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
@@ -73,7 +63,6 @@ export default function DaySegment({ rows, queryMonth }) {
                 {day.map((row) => {
                   return (
                     <Table.Row>
-                     
                       <Table.Cell>{row.name}</Table.Cell>
                       <Table.Cell>{row.amt}</Table.Cell>
                     </Table.Row>
@@ -81,11 +70,6 @@ export default function DaySegment({ rows, queryMonth }) {
                 })}
               </Table.Body>
             </Table>
-
-            {/* {day[0].date} */}
-            {/* {day.map((row) => {
-              return row.name;
-            })} */}
           </Segment>
         </Grid.Column>
       );
@@ -94,90 +78,19 @@ export default function DaySegment({ rows, queryMonth }) {
     return dd;
   };
 
-  const cde = () => {
+  // 依欄數組合每幾天一列
+  const dayRows = (columnsCount) => {
     const output = [];
     for (let i = 0; i < daysData.length; i++) {
-      if (i % 3 == 0) output.push(<Grid.Row>{abc(i)}</Grid.Row>);
+      if (i % columnsCount == 0)
+        output.push(<Grid.Row>{dayColumns(i, columnsCount)}</Grid.Row>);
     }
     return output;
   };
 
   return (
     <>
-      {/* {cde()} */}
-      {/* {daysData.slice(0, 3).map((day) => {
-        return day.map((row) => {
-          return <div key={row.id}>{row.date}{row.name}</div>;
-        });
-      })} */}
-
-      <Grid columns={3}>
-        {cde()}
-        {/* <Grid.Row>{abc()}</Grid.Row> */}
-      </Grid>
-
-      <Grid columns={3}>
-        {/* <Grid.Row>
-          {daysData.slice(0, 3).map((day, index) => {
-            return (
-              <Grid.Column>
-                <Segment>
-                  {day.map((row) => {
-                    return (
-                      <div>
-                        {row.date}
-                        {row.name}
-                        {row.amt}
-                      </div>
-                    );
-                  })}
-                </Segment>
-              </Grid.Column>
-            );
-          })}
-        </Grid.Row> */}
-        {/* <Grid.Row>
-          {daysData.slice(3, 6).map((day, index) => {
-            return (
-              <Grid.Column>
-                <Segment>
-                  {day.map((row) => {
-                    return (
-                      <div>
-                        {row.date}
-                        {row.name}
-                        {row.amt}
-                      </div>
-                    );
-                  })}
-                </Segment>
-              </Grid.Column>
-            );
-          })}
-        </Grid.Row> */}
-      </Grid>
-
-      {/* <Grid columns={3}>       
-        <Grid.Row>
-          {daysData.map((day, index) => {
-            return (
-              <Grid.Column>
-                <Segment>
-                  {day.map((row) => {
-                    return (
-                      <div>
-                        {row.date}
-                        {row.name}
-                        {row.amt}
-                      </div>
-                    );
-                  })}
-                </Segment>
-              </Grid.Column>
-            );
-          })}
-        </Grid.Row>       
-      </Grid> */}
+      <Grid columns={5}>{dayRows(5)}</Grid>
     </>
   );
 }
