@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { db_echoway } from '../../utils/firebase';
-import { Container, Tab,Segment,Button } from 'semantic-ui-react';
-import DaySegment from './components/DaySegment';
-import Dashboard from './components/Dashboard';
-import EditForm from './components/EditForm';
+
 import TableList from './components/TableList';
+import EditForm from './components/EditForm';
+import Dashboard from './components/Dashboard';
+import MonthDropDown from './components/MonthDropDown';
+import DaySegment from './components/DaySegment';
+
+import { Button, Container, Divider, Segment } from 'semantic-ui-react';
 
 export default function Index() {
+  // firebase 集合
+  const dbCol = db_echoway.collection('meals');
+
   // 資料陣列
   const [rows, setRows] = useState([]);
-  // 篩選
-  const [queryMonth, setQueryMonth] = useState('02');
 
   // 表單預設值
   const defalutItem = {
@@ -31,13 +35,10 @@ export default function Index() {
   // 編輯列索引
   const [editRowIndex, setEditRowIndex] = useState(-1);
 
-  // firebase 集合
-  const dbCol = db_echoway.collection('meals');
-
+  // 篩選
+  const [queryMonth, setQueryMonth] = useState('02');
   // 取得資料
   useEffect(() => {
-    console.clear();
-
     const queryDateBegin = '2023-' + queryMonth + '-01';
     const queryDateEnd = '2023-' + queryMonth + '-31';
     dbCol
@@ -48,44 +49,17 @@ export default function Index() {
         const data = snapshot.docs.map((doc) => {
           return { ...doc.data(), id: doc.id };
         });
-        setRows(data);
-        console.log(data);
-      });
-  }, []);
 
-  const panes = [
-    {
-      menuItem: '日',
-      render: () => (
-        <Tab.Pane>
-          {' '}
-          <DaySegment rows={rows} queryMonth={queryMonth} />
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: '月',
-      render: () => (
-        <Tab.Pane>
-          {' '}
-          <Dashboard rows={rows} />
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: '表單',
-      render: () => (
-        <Tab.Pane>
-          <TableList
-            loading={loading}
-            deleteRow={deleteRow}
-            rows={rows}
-            editRow={editRow}
-          />
-        </Tab.Pane>
-      ),
-    },
-  ];
+        setRows(data);
+      });
+    // dbCol.get().then((snapshot) => {
+    //   const data = snapshot.docs.map((doc) => {
+    //     return { ...doc.data(), id: doc.id };
+    //   });
+
+    //   setRows(data);
+    // });
+  }, [queryMonth]);
 
   // 編輯(設定索引和編輯列)
   const editRow = (row, index) => {
@@ -164,15 +138,15 @@ export default function Index() {
 
   return (
     <Container>
+      <MonthDropDown onChange={handleMonthChange} />
+      <Divider/>
+      <DaySegment rows={rows} queryMonth={queryMonth} />
+      <Dashboard rows={rows} />
 
-<Segment>
+     
+      <Segment>
         <Button onClick={newRow}>新增</Button>
       </Segment>
-
-      <Tab panes={panes} />
-
-
-
 
       <EditForm
         open={open}
@@ -185,6 +159,13 @@ export default function Index() {
         deleteRow={deleteRow}
         loading={loading}
         editRowIndex={editRowIndex}
+      />
+
+      <TableList
+        loading={loading}
+        deleteRow={deleteRow}
+        rows={rows}
+        editRow={editRow}
       />
     </Container>
   );

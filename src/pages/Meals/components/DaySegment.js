@@ -22,7 +22,7 @@ export default function DaySegment({ rows, queryMonth }) {
 
       let newData = rows.filter((row) => row.date == ymd);
 
-      console.log(newData);
+      // console.log(newData);
       if (newData.length > 0) arrayData.push(newData);
     }
 
