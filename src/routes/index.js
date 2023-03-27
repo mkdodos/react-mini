@@ -12,6 +12,7 @@ import Notes from '../pages/Notes';
 import Banks from '../pages/Banks';
 import Oil from '../pages/Oil'
 import Balances from '../pages/Balances'
+import CurrencyConverter from '../pages/CurrencyConverter'
 
 import echoway from './echoway';
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     children: [
+      {
+        path: '/currency-converter',
+        element: <CurrencyConverter />,
+      },
       {
         path: '/credits',
         element: <Credits />,

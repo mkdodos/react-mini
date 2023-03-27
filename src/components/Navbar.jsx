@@ -52,6 +52,12 @@ export default function Navbar() {
         </Link>
       </Menu.Item>
 
+      <Menu.Item name="reviews">
+        <Link className="link" to="/currency-converter">
+          匯率轉換器
+        </Link>
+      </Menu.Item>
+
       
     </Menu>
   );
