@@ -1,17 +1,23 @@
 import React from 'react';
-import { Form,Input,Dropdown } from 'semantic-ui-react';
+import { Form, Input, Dropdown } from 'semantic-ui-react';
 
-export default function CurrencyRow({options,value}) {
+export default function CurrencyRow({
+  options,
+  value,
+  onChangeCurrency,
+  amount,
+  onChangeAmount,
+}) {
   return (
     <div>
       {' '}
       <Form.Group inline>
         <Form.Field>
-          
-          <Input  />
+          <Input type="number" onChange={onChangeAmount} value={amount} />
         </Form.Field>
         <Form.Field>
           <Dropdown
+            onChange={onChangeCurrency}
             value={value}
             fluid
             selection
