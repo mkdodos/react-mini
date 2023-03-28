@@ -1,157 +1,121 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Segment, Form, Input, Dropdown } from 'semantic-ui-react';
-import CurrencyRow from './CurrencyRow';
 
 export default function Index() {
-  const data = {
-    success: true,
-    timestamp: 1519296206,
-    base: 'TWD',
-    date: '2021-03-17',
-    rates: {
-      CAD: 1.2,
-      AUD: 2,
-      CHF: 3,
-      GBP: 4,
-      JPY: 5,
+  const data = [
+    {
+      base: 'TWD',
+      rates: { USD: 0.03, JPY: 4, TWD: 1 },
     },
-  };
+    {
+      base: 'USD',
+      rates: { USD: 1, JPY: 104, TWD: 30 },
+    },
+    {
+      base: 'JPY',
+      rates: { USD: 0.0025, JPY: 1, TWD: 0.25 },
+    },
+  ];
 
-  const [options, setOptions] = useState([]);
+  // 下拉選項資料
+  const [currencyOptions, setCurrencyOptions] = useState([]);
 
-  // 基本匯率數字,轉換匯率數字
+  // 來源幣值
   const [fromCurrency, setFromCurrency] = useState();
+  // 要轉換的幣值
   const [toCurrency, setToCurrency] = useState();
 
-  // 輸入值
+  // 來源數值
+  const [fromAmount, setFromAmount] = useState(1);
+  // 轉換後的值
   const [amount, setAmount] = useState(1);
 
-  // 匯率
+  // 設定匯率
   const [rate, setRate] = useState(1);
 
-  // 判斷輸入那一個文字方塊
-  const [amountInFromCurrency, setAmountInFromCurrency] = useState(true);
-
-  let fromAmount, toAmount;
-
-  fromAmount = amount;
-  toAmount = amount * rate;
-
-  const BASE_URL = ' https://api.apilayer.com/exchangerates_data/latest';
-
   useEffect(() => {
     console.clear();
+    setFromCurrency('TWD')
+    setToCurrency(data[0].rates[0])
+    // console.log(data[0]);
+    // console.log(data[1]);
 
-    fetch(`${BASE_URL}?apikey=tTYYhdkIJuRJKcI3zJ7qBYLmUSSjVOnS`)
-      .then((response) => response.json())
-      .then((data) => {
-
-        // 下拉選項資料
-        const tmp = Object.keys(data.rates).map((row) => {
-          return { key: row, text: row, value: row };
-        });
-
-        // 加入基本匯率
-        setOptions([
-          ...tmp,
-          // { key: data.base, text: data.base, value: data.base },
-        ]);
-
-        const firstCurrency = Object.keys(data.rates)[0];
-        // 設定預設選項
-        setFromCurrency(data.base);
-        setToCurrency(firstCurrency);
-        setRate(data.rates[firstCurrency]);
-
-        // console.log(Object.keys(result.rates));
-      })
-      .catch((error) => console.log('error', error));
-
-   
-    // setToCurrency("AUD");
-    // console.log(firstCurrency);
-    // console.log(data.base);
-    // console.log(data.rates[data.base]);
-    // setAmount(data.rates[data.base])
-    // 下拉選項資料
-    // const tmp = Object.keys(data.rates).map((row) => {
-
-    //   return { key: row, text: row, value: row };
-    // });
+    // const BASE_URL = ' https://api.apilayer.com/exchangerates_data/latest';
+    // fetch(`${BASE_URL}?apikey=tTYYhdkIJuRJKcI3zJ7qBYLmUSSjVOnS`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    setCurrencyOptions(Object.keys(data[0].rates));
+    //   });
   }, []);
 
-  // const BASE_URL = 'https://api.exchangeratesapi.io/latest';
-
-  // https://api.apilayer.com/exchangerates_data/latest
-
-  // var myHeaders = new Headers();
-  // myHeaders.append('apikey', 'tTYYhdkIJuRJKcI3zJ7qBYLmUSSjVOnS');
-
-  // var requestOptions = {
-  //   method: 'GET',
-  //   redirect: 'follow',
-  //   headers: myHeaders,
-  // };
-
   useEffect(() => {
-    console.clear();
-    fetch(`${BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}&apikey=tTYYhdkIJuRJKcI3zJ7qBYLmUSSjVOnS`)
-      .then((response) => response.json())
-      .then((data) => {
-        setRate(data.rates[toCurrency]);
-        console.log(data.rates[toCurrency])
-      })
-      .catch((error) => console.log('error', error));
-
-    
+    if (fromCurrency != null && toCurrency != null) {
+      // 取得匯率
+      const newData = data.filter((row) => row.base == fromCurrency);
+      console.log(newData[0].rates[toCurrency]);
+    }
   }, [fromCurrency, toCurrency]);
 
-  // select change 幣值選項
-  function handleChangeFromCurrency(e, { value }) {
-    setFromCurrency(value);
-
-    // console.log(value)
-    // setAmount(fromAmount)
-  }
-
-  //
-  function handleChangeToCurrency(e, { value }) {
-    setToCurrency(value);
-    // setRate(data.rates[value])
-    // console.log(value)
-    // setAmount(toAmount)
-  }
-
-  // input change
-  function handleToAmountChange(e) {
-    setAmount(e.target.value);
-    setToCurrency(e.target.value);
-  }
-  function handleFromAmountChange(e) {
-    setAmount(e.target.value);
+  // 下拉選取
+  function onSelectFromChange(e) {
     setFromCurrency(e.target.value);
+
+    // console.log(toc)
+
+    // 設定匯率
+    // setRate(data[0].rates[e.target.value])
+    // 2次set在一起無法即時更新
+    // setAmount
+    // setToAmount(rate*fromAmount)
   }
 
+  function onSelectToChange(e) {
+    // 取得匯率
+    // const newData = data.filter(row=>row.base==e.target.value);
+    // console.log(newData)
+
+    setToCurrency(e.target.value);
+    // 設定匯率
+    // setRate(data[0].rates[e.target.value])
+    // 2次set在一起無法即時更新
+    // setAmount
+    // setToAmount(rate*fromAmount)
+  }
+
+  let toAmount;
+  toAmount = amount * rate;
+
+  // input change 數值變更
+  function handleFromAmountChange(e) {
+    setFromAmount(e.target.value);
+    // 設定給 toAmount
+    const rate = data[0].rates[e.target.value];
+    setAmount(e.target.value);
+    // setToAmount(rate*fromAmount)
+  }
   return (
     <Container>
-      <Segment>
-        <Form>
-          <CurrencyRow
-            onChangeAmount={handleFromAmountChange}
-            amount={fromAmount}
-            options={options}
-            value={fromCurrency}
-            onChangeCurrency={handleChangeFromCurrency}
-          />
-          <CurrencyRow
-            options={options}
-            amount={toAmount}
-            value={toCurrency}
-            onChangeAmount={handleToAmountChange}
-            onChangeCurrency={handleChangeToCurrency}
-          />
-        </Form>
-      </Segment>
+      <input
+        type="number"
+        value={fromAmount}
+        onChange={handleFromAmountChange}
+      />
+      <select onChange={onSelectFromChange} value={fromCurrency}>
+        {currencyOptions.map((currency) => (
+          <option key={currency}>{currency}</option>
+        ))}
+      </select>
+
+      <input type="number" value={toAmount} />
+      <select onChange={onSelectToChange} value={toCurrency}>
+        {currencyOptions.map((currency) => (
+          <option key={currency}>{currency}</option>
+        ))}
+      </select>
+
+      {/* <Dropdown
+      /> */}
     </Container>
   );
 }
