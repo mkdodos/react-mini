@@ -26,7 +26,7 @@ export default function Index() {
   const [toCurrency, setToCurrency] = useState();
 
   // 來源數值
-  const [fromAmount, setFromAmount] = useState(1);
+  // const [fromAmount, setFromAmount] = useState(1);
   // 轉換後的值
   const [amount, setAmount] = useState(1);
 
@@ -53,7 +53,9 @@ export default function Index() {
     if (fromCurrency != null && toCurrency != null) {
       // 取得匯率
       const newData = data.filter((row) => row.base == fromCurrency);
-      console.log(newData[0].rates[toCurrency]);
+      setRate(newData[0].rates[toCurrency])
+      console.log(amount*newData[0].rates[toCurrency])
+      // console.log(newData[0].rates[toCurrency]);
     }
   }, [fromCurrency, toCurrency]);
 
@@ -61,7 +63,7 @@ export default function Index() {
   function onSelectFromChange(e) {
     setFromCurrency(e.target.value);
 
-    // console.log(toc)
+    // console.log(amount)
 
     // 設定匯率
     // setRate(data[0].rates[e.target.value])
@@ -71,29 +73,33 @@ export default function Index() {
   }
 
   function onSelectToChange(e) {
-    // 取得匯率
-    // const newData = data.filter(row=>row.base==e.target.value);
-    // console.log(newData)
+   
 
     setToCurrency(e.target.value);
-    // 設定匯率
-    // setRate(data[0].rates[e.target.value])
-    // 2次set在一起無法即時更新
-    // setAmount
-    // setToAmount(rate*fromAmount)
+  
   }
 
-  let toAmount;
+  // 金額計算
+  let fromAmount,toAmount;
+  fromAmount = amount
   toAmount = amount * rate;
 
   // input change 數值變更
   function handleFromAmountChange(e) {
-    setFromAmount(e.target.value);
-    // 設定給 toAmount
-    const rate = data[0].rates[e.target.value];
+    // setFromAmount(e.target.value);
+    // 設定給 toAmount    
     setAmount(e.target.value);
-    // setToAmount(rate*fromAmount)
+    
   }
+
+
+  function handleToAmountChange(e) {
+    // setToAmount(e.target.value);
+    // 設定給 toAmount    
+    setAmount(e.target.value);    
+  }
+
+
   return (
     <Container>
       <input
@@ -107,7 +113,7 @@ export default function Index() {
         ))}
       </select>
 
-      <input type="number" value={toAmount} />
+      <input type="number" value={toAmount} onChange={handleToAmountChange} />
       <select onChange={onSelectToChange} value={toCurrency}>
         {currencyOptions.map((currency) => (
           <option key={currency}>{currency}</option>
