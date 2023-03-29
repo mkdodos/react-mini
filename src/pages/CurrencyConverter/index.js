@@ -33,12 +33,27 @@ export default function Index() {
   // 設定匯率
   const [rate, setRate] = useState(1);
 
+  // 判斷是輸入那個數值
+  const [isInputFrom, setIsInputFrom] = useState(true);
+
+  // 金額計算
+  let fromAmount, toAmount;
+  if (isInputFrom) {
+    fromAmount = amount;
+    toAmount = amount * rate;
+  } else {
+    fromAmount = amount / rate;
+    toAmount = amount;
+  }
+
   useEffect(() => {
     console.clear();
-    setFromCurrency('TWD')
-    setToCurrency(data[0].rates[0])
-    // console.log(data[0]);
-    // console.log(data[1]);
+    setFromCurrency('TWD');
+
+    // 資料中第一個鍵值的匯率
+    const firstCurrency = Object.keys(data[0].rates)[0];
+    setToCurrency(firstCurrency);
+    setRate(data[0].rates[firstCurrency]);
 
     // const BASE_URL = ' https://api.apilayer.com/exchangerates_data/latest';
     // fetch(`${BASE_URL}?apikey=tTYYhdkIJuRJKcI3zJ7qBYLmUSSjVOnS`)
@@ -53,8 +68,8 @@ export default function Index() {
     if (fromCurrency != null && toCurrency != null) {
       // 取得匯率
       const newData = data.filter((row) => row.base == fromCurrency);
-      setRate(newData[0].rates[toCurrency])
-      console.log(amount*newData[0].rates[toCurrency])
+      setRate(newData[0].rates[toCurrency]);
+      console.log(amount * newData[0].rates[toCurrency]);
       // console.log(newData[0].rates[toCurrency]);
     }
   }, [fromCurrency, toCurrency]);
@@ -73,32 +88,23 @@ export default function Index() {
   }
 
   function onSelectToChange(e) {
-   
-
     setToCurrency(e.target.value);
-  
   }
-
-  // 金額計算
-  let fromAmount,toAmount;
-  fromAmount = amount
-  toAmount = amount * rate;
 
   // input change 數值變更
   function handleFromAmountChange(e) {
+    setIsInputFrom(true)
     // setFromAmount(e.target.value);
-    // 設定給 toAmount    
+    // 設定給 toAmount
     setAmount(e.target.value);
-    
   }
-
 
   function handleToAmountChange(e) {
+    setIsInputFrom(false)
     // setToAmount(e.target.value);
-    // 設定給 toAmount    
-    setAmount(e.target.value);    
+    // 設定給 toAmount
+    setAmount(e.target.value);
   }
-
 
   return (
     <Container>
