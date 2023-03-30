@@ -1,0 +1,51 @@
+body {
+  
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: .25rem;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  height: 150px;
+  width: 150px;
+  background-color: white;
+
+  /* 翻轉控制 */
+  transform: rotateY(0deg) translateY(var(--rotate-y,0));
+  transform-style: preserve-3d;
+  /* 兩個外觀間轉換的補間動畫 */
+  transition: 150ms;
+
+  
+}
+
+.card.flip {
+  transform: rotateY(180deg);
+}
+
+.card:hover {
+  --rotate-y:-2px;
+  cursor: pointer;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .4);
+}
+
+/* 字靠左 */
+.card .front {
+  left:0;
+}
+
+.card .front, 
+.card .back {
+  padding: 1rem;
+  position: absolute;
+  /* 背面隱藏 */
+  backface-visibility: hidden;
+}
+
+.card .back {
+  /* 轉180度 */
+  transform: rotateY(180deg);
+}

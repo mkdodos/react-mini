@@ -58,6 +58,12 @@ export default function Navbar() {
         </Link>
       </Menu.Item>
 
+      <Menu.Item name="reviews">
+        <Link className="link" to="/flashcard">
+          閃卡
+        </Link>
+      </Menu.Item>
+
       
     </Menu>
   );

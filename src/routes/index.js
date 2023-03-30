@@ -13,6 +13,7 @@ import Banks from '../pages/Banks';
 import Oil from '../pages/Oil'
 import Balances from '../pages/Balances'
 import CurrencyConverter from '../pages/CurrencyConverter'
+import Flashcard from '../pages/Flashcard';
 
 import echoway from './echoway';
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     children: [
+      {
+        path: '/flashcard',
+        element: <Flashcard />,
+      },
       {
         path: '/currency-converter',
         element: <CurrencyConverter />,
