@@ -3,9 +3,9 @@ import Flashcard from './Flashcard';
 
 export default function FlashcardList({ flashcards }) {
   return (
-    <div>
+    <div className='card-grid'>
       {flashcards.map((flashcard) => {
-        return <div><Flashcard flashcard={flashcard}/></div>;
+        return <Flashcard key={flashcard.id} flashcard={flashcard} />;
       })}
     </div>
   );

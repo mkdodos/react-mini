@@ -14,7 +14,7 @@ body {
   background-color: white;
 
   /* 翻轉控制 */
-  transform: rotateY(0deg) translateY(var(--rotate-y,0));
+  transform: rotateY(var(--rotate-y,0)) translateY(var(--translate-y,0));
   transform-style: preserve-3d;
   /* 兩個外觀間轉換的補間動畫 */
   transition: 150ms;
@@ -23,11 +23,11 @@ body {
 }
 
 .card.flip {
-  transform: rotateY(180deg);
+  --rotate-y:180deg;
 }
 
 .card:hover {
-  --rotate-y:-2px;
+  --translate-y:-2px;
   cursor: pointer;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, .4);
 }
@@ -48,4 +48,13 @@ body {
 .card .back {
   /* 轉180度 */
   transform: rotateY(180deg);
+}
+
+.flashcard-options {
+  margin-top: .5rem;
+}
+
+.flashcard-option {
+  font-size: 0.75rem;
+  color:#555;
 }
