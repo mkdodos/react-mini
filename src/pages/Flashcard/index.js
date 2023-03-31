@@ -7,50 +7,33 @@ import axios from 'axios';
 export default function Index() {
   const [flashcards, setFlashcards] = useState([]);
   useEffect(() => {
-    axios.get('https://opentdb.com/api.php?amount=10').then((res) => {
+    axios.get('https://opentdb.com/api.php?amount=15').then((res) => {
       const data = res.data.results.map((row, index) => {
         // console.log(index+'-'+Date.now())
         const id = `${index}-${Date.now()}`;
-        const options = [...row.incorrect_answers, row.correct_answer];
+        const options = [
+          ...row.incorrect_answers.map((a) => decodeString(a)),
+          row.correct_answer,
+        ];
         return {
           id,
-          question: row.question,
+          question: decodeString(row.question),
           answer: row.correct_answer,
-          options,
+          options: options.sort(() => Math.random()-0.5 ),
         };
       });
       setFlashcards(data);
-
-      console.log(data);
+      // Math.random() 產生 0-1的小數, -0.5 就會有一半是正,一半是負
+      console.log(Math.random()-0.5);
     });
   }, []);
-  // const flashcards = [
-  //   {
-  //     id:'1',
-  //     question:'what is 2 + 2?',
-  //     answer:'4',
-  //     options:[
-  //       '1','2','3','4'
-  //     ]
-  //   },
-  //   {
-  //     id:'2',
-  //     question:'q2',
-  //     answer:'a2',
-  //     options:[
-  //       '2','4','6','8'
-  //     ]
-  //   }
-  //   ,
-  //   {
-  //     id:'3',
-  //     question:'Bird',
-  //     answer:'鳥',
-  //     options:[
-  //       '狗','獅子','老虎','狒狒'
-  //     ]
-  //   }
-  // ]
+
+  // 將一些內容為 html 符號轉成純文字
+  function decodeString(str) {
+    const textArea = document.createElement('textarea');
+    textArea.innerHTML = str;
+    return textArea.value;
+  }
 
   return (
     <Container>
