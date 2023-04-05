@@ -1,3 +1,22 @@
+.my-input {
+  padding: 8px;
+  border-radius: 5px;
+  width: 150px;
+  /* border-color: gray; */
+  /* outline: none; */
+  border: 2px solid rgba(0, 0, 0,0.2);
+  margin: 5px;
+}
+
+.my-button {
+  padding: 8px;
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0,0.2);
+  margin-left: 5px;
+  width: 60px;
+}
+
+
 .card {
   background-color: white;
   width: 150px;
@@ -18,8 +37,7 @@
   /* 兩個外觀間轉換的補間動畫 */
   transition: 350ms; 
 
-  /* 翻轉控制 */
-  /* transform: rotateY(180deg) */
+  cursor: pointer;
   
 }
 

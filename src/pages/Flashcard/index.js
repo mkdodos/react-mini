@@ -1,15 +1,49 @@
-import React, { useState } from 'react';
-import { Container } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import { Button, Container, Item } from 'semantic-ui-react';
 import './styles.css';
+// import data from './data.json';
+import MycardList from './components/MycardList';
+
+import { db } from '../../utils/firebase';
 
 export default function Index() {
-  const [flip, setFlip] = useState(false);
+  const [rows, setRows] = useState([]);
+
+  const [item, setItem] = useState({ch:'d',en:'dd'});
+
+  useEffect(() => {
+    db.collection('words').onSnapshot((snapshot) => {
+      const data = snapshot.docs.map((doc) => {
+        return { ...doc.data(), id: doc.id };
+      });
+      setRows(data);
+      console.log(snapshot.size);
+    });
+
+    // console.log(data[1])
+  }, []);
+
+  function handleClick() {
+    db.collection('words').add(item);
+  }
+
+  function handleChange(e) {
+    // console.log(e.target.name)
+    setItem({...item,[e.target.name]:e.target.value})
+  }
+
+  // console.log(rows);
 
   return (
     <Container>
+      {/* <Button onClick={handleClick}>新增</Button> */}
+      <input className='my-input' name="ch" value={item.ch} onChange={handleChange} />
+      <input className='my-input' name="en" value={item.en} onChange={handleChange} />
+      <button className='my-button' onClick={handleClick}>新增</button>
+      <MycardList data={rows} />
       {/* className='card flip' 在 css 中設定 .card.flip */}
       {/* 動態改變樣式 */}
-      <div
+      {/* <div
         className={`card ${flip ? 'flip' : ''}`}
         onClick={() => {
           setFlip(!flip);
@@ -17,7 +51,7 @@ export default function Index() {
       >
         <div className="front">鳥</div>
         <div className="back">Bird</div>
-      </div>
+      </div> */}
     </Container>
   );
 }
