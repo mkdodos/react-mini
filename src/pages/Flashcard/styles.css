@@ -1,0 +1,49 @@
+.card {
+  background-color: white;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* <offset-x> <y> <blur-radius> <spread-radius> <color>*/
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0,0.2);
+
+  /* 翻轉控制 */
+  transform: rotateY(var(--rotate-y,0));
+
+  /* 3D的形式,讓2個div的內容可以切換 */
+  transform-style: preserve-3d;
+  
+
+  /* 兩個外觀間轉換的補間動畫 */
+  transition: 350ms; 
+
+  /* 翻轉控制 */
+  /* transform: rotateY(180deg) */
+  
+}
+
+/* 在 click 事件,改變為此樣式,轉180度,正反內容互換 */
+.card.flip {
+  --rotate-y:180deg
+}
+
+
+.card .front, 
+.card .back {
+  /* padding: 1rem; */
+  /* 讓正反內容可以出現在同個位置 */
+  position: absolute;
+  /* 背面隱藏 */
+  backface-visibility: hidden;
+}
+
+/* 一開始背面內容轉180度,搭配 backface 做隱藏 */
+.card .back {
+ 
+  /* 轉180度(到背面) */
+  transform: rotateY(180deg);
+  /* 背面隱藏 */
+  /* backface-visibility: hidden; */
+}
+
