@@ -9,7 +9,7 @@ import { db } from '../../utils/firebase';
 export default function Index() {
   const [rows, setRows] = useState([]);
 
-  const [item, setItem] = useState({ch:'d',en:'dd'});
+  const [item, setItem] = useState({ch:'',en:''});
 
   useEffect(() => {
     db.collection('words').onSnapshot((snapshot) => {
@@ -24,7 +24,7 @@ export default function Index() {
   }, []);
 
   function handleClick() {
-    db.collection('words').add(item);
+    db.collection('words').add(item).then(()=>setItem({en:'',ch:''}));
   }
 
   function handleChange(e) {
@@ -37,8 +37,8 @@ export default function Index() {
   return (
     <Container>
       {/* <Button onClick={handleClick}>新增</Button> */}
-      <input className='my-input' name="ch" value={item.ch} onChange={handleChange} />
-      <input className='my-input' name="en" value={item.en} onChange={handleChange} />
+      <input className='my-input' placeholder='guide' name="en" value={item.en} onChange={handleChange} />
+      <input className='my-input' placeholder='指導' name="ch" value={item.ch} onChange={handleChange} />
       <button className='my-button' onClick={handleClick}>新增</button>
       <MycardList data={rows} />
       {/* className='card flip' 在 css 中設定 .card.flip */}
