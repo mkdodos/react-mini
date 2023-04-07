@@ -1,10 +1,12 @@
 import React,{useState} from 'react';
 
 export default function Mycard({card}) {
+  
   const [flip, setFlip] = useState(false);
-  return (
+  return (    
     <div
-      className={`card ${flip ? 'flip' : ''}`}
+    // className='card flip' 在 css 中設定 .card.flip   
+    className={`card ${flip ? 'flip' : ''}`}
       onClick={() => {
         setFlip(!flip);
       }}

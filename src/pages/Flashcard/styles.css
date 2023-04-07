@@ -1,3 +1,54 @@
+body {
+  background-color: red;
+}
+
+
+.word-list {
+  /* height:500px; */
+  padding: 5px;
+  background-color: #e0e6e6;
+}
+
+.word {
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 15px;
+  background-color: white;
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* border:1px solid #555; */
+  width: 150px;
+  height: 65px;
+  padding: 15px;
+  position: relative;
+  
+}
+
+.word .en,.word .ch {
+  position: absolute;
+  left:15px;
+  /* color:red; */
+}
+
+.word .en {
+ 
+  font-weight: 600;
+  top:10px;
+  /* top:75px; */
+  color:#6495ED;
+}
+
+
+.word .ch {
+ 
+  top:35px;
+}
+
+
+
+
 .my-input {
   padding: 8px;
   border-radius: 5px;

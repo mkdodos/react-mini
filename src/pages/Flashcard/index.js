@@ -3,6 +3,8 @@ import { Button, Container, Input } from 'semantic-ui-react';
 import './styles.css';
 // import data from './data.json';
 import MycardList from './components/MycardList';
+import WordList from './components/WordList';
+// import Word from './components/Word';
 
 import { db } from '../../utils/firebase';
 
@@ -13,13 +15,16 @@ export default function Index() {
 
   const [search, setSearch] = useState('');
 
+
+
+
   useEffect(() => {
     if (search != '') {
     } else {
       
     }
 
-    db.collection('words').limit(2).orderBy('createdAt','desc').onSnapshot((snapshot) => {
+    db.collection('words').limit(10).orderBy('createdAt','desc').onSnapshot((snapshot) => {
       const data = snapshot.docs.map((doc) => {
         return { ...doc.data(), id: doc.id };
       });
@@ -38,9 +43,11 @@ export default function Index() {
 
   function handleSearch() {
     db.collection('words')
-      // .where('en', '==', search)      
-      .where('en', '>=', search)
-      .where('en', '<=', search + '\uf8ff')
+      // .where('en', '==', search)     
+      // https://stackoverflow.com/questions/46573804/firestore-query-documents-startswith-a-string
+      // 以下2條件相當於startsWith 
+      .where('ch', '>=', search)
+      .where('ch', '<=', search + '\uf8ff')
       .get()
       .then((snapshot) => {
         const data = snapshot.docs.map((doc) => {
@@ -60,7 +67,9 @@ export default function Index() {
 
   return (
     <Container>
-      <Input value={search} onChange={(e) => setSearch(e.target.value)} />
+      <WordList words={rows}/>
+     
+      {/* <Input value={search} onChange={(e) => setSearch(e.target.value)} />
       <Button onClick={handleSearch}>搜尋</Button>
       <input
         className="my-input"
@@ -79,18 +88,7 @@ export default function Index() {
       <button className="my-button" onClick={handleClick}>
         新增
       </button>
-      <MycardList data={rows} />
-      {/* className='card flip' 在 css 中設定 .card.flip */}
-      {/* 動態改變樣式 */}
-      {/* <div
-        className={`card ${flip ? 'flip' : ''}`}
-        onClick={() => {
-          setFlip(!flip);
-        }}
-      >
-        <div className="front">鳥</div>
-        <div className="back">Bird</div>
-      </div> */}
+      <MycardList data={rows} />   */}
     </Container>
   );
 }
