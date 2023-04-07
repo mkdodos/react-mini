@@ -28,8 +28,9 @@ body {
 
   /* vw view width 可視寬度 */
   height:8vw;
-  padding: 4.5vw;  
-  font-size: 3.5vw;
+  padding: 5vw;  
+  /* 設定 12px 為最小值,再依可視寬度調度,避免都用 vw 設定,視窗小的時候字太小 */
+  font-size:calc(12px + 1vw);
   
 }
 
