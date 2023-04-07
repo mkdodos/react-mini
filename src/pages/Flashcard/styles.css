@@ -7,19 +7,23 @@ body {
   /* height:500px; */
   padding: 5px;
   background-color: #e0e6e6;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 
 .word {
   border-radius: 5px;
   margin-bottom: 10px;
   margin-top: 10px;
-  margin-left: 15px;
+  margin-left: 5%;
+  margin-right: 5%;
   background-color: white;
-  display: flex;
+  /* display: flex; */
   /* justify-content: center; */
   /* align-items: center; */
   /* border:1px solid #555; */
-  width: 150px;
+  /* width: 90%; */
   height: 65px;
   padding: 15px;
   position: relative;
