@@ -14,8 +14,8 @@ body {
 
 .word {
   border-radius: 5px;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 2vw;
+  margin-top:calc(10px + 1vw);
   margin-left: 5%;
   margin-right: 5%;
   background-color: white;
@@ -28,9 +28,9 @@ body {
 
   /* vw view width 可視寬度 */
   height:8vw;
-  padding: 5vw;  
+  padding: calc(20px + 1vw);  
   /* 設定 12px 為最小值,再依可視寬度調度,避免都用 vw 設定,視窗小的時候字太小 */
-  font-size:calc(12px + 1vw);
+  font-size:calc(10px + 1.8vw);
   
 }
 
