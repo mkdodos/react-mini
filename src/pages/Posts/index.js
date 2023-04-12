@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api/posts';
 import PostList from './PostList';
+import CardList from './CardList';
 import './index.css';
 
 export default function Index() {
@@ -33,8 +34,9 @@ export default function Index() {
     fetchPosts();
   }, []);
   return (
-    <div className="first">
-      <PostList rows={rows} />
+    <div>
+      {/* <PostList rows={rows} /> */}
+      <CardList rows={rows} />
     </div>
   );
 }

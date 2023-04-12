@@ -15,22 +15,21 @@ export default function Index() {
 
   const [search, setSearch] = useState('');
 
-
-
-
   useEffect(() => {
     if (search != '') {
     } else {
-      
     }
 
-    db.collection('words').limit(10).orderBy('createdAt','desc').onSnapshot((snapshot) => {
-      const data = snapshot.docs.map((doc) => {
-        return { ...doc.data(), id: doc.id };
+    db.collection('words')
+      .limit(10)
+      .orderBy('createdAt', 'desc')
+      .onSnapshot((snapshot) => {
+        const data = snapshot.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        });
+        setRows(data);
+        console.log(snapshot.size);
       });
-      setRows(data);
-      console.log(snapshot.size);
-    });
 
     // console.log(data[1])
   }, []);
@@ -43,9 +42,9 @@ export default function Index() {
 
   function handleSearch() {
     db.collection('words')
-      // .where('en', '==', search)     
+      // .where('en', '==', search)
       // https://stackoverflow.com/questions/46573804/firestore-query-documents-startswith-a-string
-      // 以下2條件相當於startsWith 
+      // 以下2條件相當於startsWith
       .where('ch', '>=', search)
       .where('ch', '<=', search + '\uf8ff')
       .get()
@@ -67,8 +66,8 @@ export default function Index() {
 
   return (
     <Container>
-      <WordList words={rows}/>
-     
+      <WordList words={rows} />
+
       {/* <Input value={search} onChange={(e) => setSearch(e.target.value)} />
       <Button onClick={handleSearch}>搜尋</Button>
       <input

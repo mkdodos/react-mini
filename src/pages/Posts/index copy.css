@@ -1,8 +1,10 @@
-.plan-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+.first {
+  /* background-color: red; */
+}
+
+.post-list {
+  padding: 1em;
   background-color: #a0d4cd;
-  /* background-color: teal; */
 }
 
 .post {
@@ -41,7 +43,7 @@
 
 .post .right {
   display: flex;
-  /* width: 100px; */
+  width: 100px;
   /* border: 1px solid teal; */
   justify-content: space-evenly;
   align-items: center;
