@@ -31,11 +31,11 @@ export default function Navbar() {
         </Link>
       </Menu.Item> */}
 
-      <Menu.Item name="reviews">
+      {/* <Menu.Item name="reviews">
         <Link className="link" to="/meals">
           訂餐
         </Link>
-      </Menu.Item>
+      </Menu.Item> */}
 
       <Menu.Item name="reviews">
         <Link className="link" to="/notes">
@@ -59,9 +59,15 @@ export default function Navbar() {
         </Link>
       </Menu.Item>
 
-      <Menu.Item name="reviews">
+      {/* <Menu.Item name="reviews">
         <Link className="link" to="/balances">
           記帳
+        </Link>
+      </Menu.Item> */}
+
+      <Menu.Item name="reviews">
+        <Link className="link" to="/posts">
+          Posts
         </Link>
       </Menu.Item>
 
@@ -74,6 +80,11 @@ export default function Navbar() {
       <Menu.Item name="reviews">
         <Link className="link" to="/flashcard">
           閃卡
+        </Link>
+      </Menu.Item>
+      <Menu.Item name="reviews">
+        <Link className="link" to="/word-bank">
+          單字庫
         </Link>
       </Menu.Item>
     </Menu>

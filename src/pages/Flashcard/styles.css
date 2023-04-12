@@ -20,7 +20,7 @@ body {
   margin-right: 5%;
   background-color: white;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;  
   align-items: center;
   /* border:1px solid #555; */
   /* width: 90%; */
@@ -31,14 +31,15 @@ body {
   padding: calc(20px + 1vw);  
   /* 設定 12px 為最小值,再依可視寬度調度,避免都用 vw 設定,視窗小的時候字太小 */
   font-size:calc(10px + 1.8vw);
-  
+  text-align: left;
 }
 
 .word .en,.word .ch {
   /* position: absolute; */
-  left:15px;
-  margin-left: 5%;
+  /* left:15px; */
+  /* margin-left: 5%; */
   /* color:red; */
+  
 }
 
 .word .en {

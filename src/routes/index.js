@@ -1,4 +1,4 @@
-import { createBrowserRouter,  Outlet } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -10,10 +10,12 @@ import Sections from '../pages/Sections';
 import Meals from '../pages/Meals';
 import Notes from '../pages/Notes';
 import Banks from '../pages/Banks';
-import Oil from '../pages/Oil'
-import Balances from '../pages/Balances'
-import CurrencyConverter from '../pages/CurrencyConverter'
+import Oil from '../pages/Oil';
+import Balances from '../pages/Balances';
+import CurrencyConverter from '../pages/CurrencyConverter';
 import Flashcard from '../pages/Flashcard';
+import WordBank from '../pages/WordBank';
+import Posts from '../pages/Posts';
 
 import echoway from './echoway';
 
@@ -22,7 +24,6 @@ const Layout = () => {
     <>
       <Navbar />
       <Outlet />
-     
     </>
   );
 };
@@ -32,6 +33,14 @@ const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     children: [
+      {
+        path: '/posts',
+        element: <Posts />,
+      },
+      {
+        path: '/word-bank',
+        element: <WordBank />,
+      },
       {
         path: '/flashcard',
         element: <Flashcard />,
@@ -69,7 +78,7 @@ const router = createBrowserRouter([
         path: '/balances',
         element: <Balances />,
       },
-      echoway
+      echoway,
       // {
       //   path: '/car-routes',
       //   element: <CarRoutes />,
@@ -87,7 +96,7 @@ const router = createBrowserRouter([
   {
     path: '/notebook',
     element: <Notebook />,
-  }, 
+  },
 ]);
 
 export default router;
