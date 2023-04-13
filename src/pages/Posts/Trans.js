@@ -10,5 +10,7 @@ export default function Trans({ rows }) {
     },
   ];
 
-  return <Dropdown placeholder="選取帳戶" selection options={rows}></Dropdown>;
+  return (
+    <Dropdown fluid placeholder="選取帳戶" selection options={rows}></Dropdown>
+  );
 }
