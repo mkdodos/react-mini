@@ -20,7 +20,8 @@ export default function Index() {
   useEffect(() => {
     console.clear();
     db.collection('accounts')
-      .where('user', '==', 'dada@gmail.com')
+      // .where('user', '==', 'dada@gmail.com')
+      .where('user', '==', 'mkdodos@gmail.com')
       // .limit(1)
       .get()
       .then((snapshot) => {
@@ -34,6 +35,7 @@ export default function Index() {
           const item = doc.data();
           return {
             key: doc.id,
+            // text: item.name + ' $' + item.balance,
             text: item.name,
             value: item.name,
           };
@@ -46,7 +48,7 @@ export default function Index() {
   }, []);
   return (
     <div>
-      <TransList rows={options} />
+      <TransList rows={rows} options={options} />
       {/* <AccList rows={rows} /> */}
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 
-export default function Trans({ rows }) {
+export default function Trans({ rows, onChange, value }) {
   const friendOptions = [
     {
       key: 'Jenny Hess',
@@ -11,6 +11,13 @@ export default function Trans({ rows }) {
   ];
 
   return (
-    <Dropdown fluid placeholder="選取帳戶" selection options={rows}></Dropdown>
+    <Dropdown
+      value={value}
+      fluid
+      placeholder="選取帳戶"
+      selection
+      options={rows}
+      onChange={onChange}
+    ></Dropdown>
   );
 }
