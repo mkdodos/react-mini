@@ -1,6 +1,9 @@
 .trans {
   /* background-color: teal; */
   margin: 2em;
+  display: flex;
+  /* justify-content: space-around; */
+  justify-content: center;
 }
 
 .trans .acc {
