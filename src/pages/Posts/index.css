@@ -4,6 +4,7 @@
   display: flex;
   /* justify-content: space-around; */
   justify-content: center;
+  /* align-items: center; */
 }
 
 .trans .acc {
@@ -13,12 +14,13 @@
 }
 
 .trans-card {
+  /* height: 100vh; */
   width: 80%;
   /* display: block; */
   /* padding: 1em; */
   /* background-color: #8fb1b1; */
   /* margin: 2em; */
-  border-radius: 0.5em;
+  border-radius: 0em 0em 1em 1em;
   /* box-shadow: 0 0 2px 1px #649681; */
   border: 2px solid #8fb1b1;
   /* opacity: 0.5; */
@@ -26,9 +28,10 @@
 
 .trans-card .header {
   font-size: 1.5em;
-  margin-bottom: 3em;
+  margin-bottom: 2em;
   padding: 1em;
   text-align: center;
+  /* border-radius: 0.1em; */
   /* background-color: rgba(255, 255, 204, 0.2); */
   background-color: teal;
   color: #fff;
@@ -37,11 +40,11 @@
 
 .trans-card .acc {
   /* 上右下左 */
-  margin: 2em 5em 2em 5em;
+  margin: 2em 3rem 2em 3rem;
 }
 
 .trans-card .footer {
-  margin-bottom: 5em;
+  margin-bottom: 3em;
 }
 
 /* .trans-card .acc input {

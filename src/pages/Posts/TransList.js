@@ -12,7 +12,7 @@ export default function TransList({ rows }) {
           <Trans rows={rows} />
         </div>
         <div className="acc">
-          <Input label="$" fluid placeholder="轉帳金額" />
+          <Input type="number" label="$" fluid placeholder="轉帳金額" />
         </div>
         <div className="acc">
           <Trans rows={rows} />
