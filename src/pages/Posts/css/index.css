@@ -1,0 +1,44 @@
+body {
+  /* background-color: teal; */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1em;
+  margin: 1em;
+  /* background-color: teal; */
+}
+
+.grid .acc {
+  /* padding: 1em; */
+  border: 1px solid teal;
+  display: flex;
+  /* 空白平均分配在前中後 */
+  /* justify-content: space-evenly; */
+  /* 空白平均分配在中間 */
+  /* justify-content: space-between; */
+  /* 空白前後分配,剩餘空白在中間 */
+  justify-content: space-around;
+}
+
+.grid .acc div {
+  border: 1px solid pink;
+}
+
+.grid .acc .first-column {
+  /* 設定寬度,讓每個 div (欄) 內容可以對齊 */
+  width: 50%;
+  padding: 1em;
+  text-align: center;
+}
+
+.grid .acc .second-column {
+  width: 30%;
+  /* padding: 1em; */
+}
+
+.grid .acc .second-column div {
+  /* width: 20%; */
+  padding: 1em;
+}

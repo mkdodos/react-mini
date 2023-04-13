@@ -1,0 +1,51 @@
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  background-color: #a0d4cd;
+  /* background-color: teal; */
+}
+
+.post {
+  display: flex;
+  justify-content: space-between;
+  margin: 1em;
+  background-color: #fff;
+  padding: 1em;
+  border-radius: 0.5em;
+  color: #494f5f;
+}
+
+.post .first-column {
+  width: 20%;
+}
+
+.post .second-column {
+  width: 50%;
+}
+
+.post .first-column,
+.post .second-column {
+  margin-right: 1em;
+  /* padding: 0.1em; */
+}
+
+.post .first-column div,
+.post .second-column div {
+  /* margin-right: 1em; */
+  padding: 0.2em;
+}
+
+.post .second-column {
+  /* border: 1px solid teal; */
+}
+
+.post .right {
+  display: flex;
+  /* width: 100px; */
+  /* border: 1px solid teal; */
+  justify-content: space-evenly;
+  align-items: center;
+  color: teal;
+  font-size: 1.2em;
+  /* text-align: right; */
+}

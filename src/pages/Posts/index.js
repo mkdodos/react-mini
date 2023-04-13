@@ -1,42 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../api/posts';
-import PostList from './PostList';
-import CardList from './CardList';
+import { db } from '../../utils/firebase';
+import AccList from './AccList';
+import TransList from './TransList';
 import './index.css';
 
 export default function Index() {
-  // workdone
   // {
-  //   "cust_name": "萬龍",
-  //   "work_id": "2022112904",
-  //   "in_qty": "2",
-  //   "qty": "2",
-  //   "work_name": "刀軸",
-  //   "pic_no": "",
-  //   "size": "Φ185*1440*2425",
-  //   "dest": ""
-  //   }
-  const [rows, setRows] = useState([]);
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res1 = await api.get(
-          '/react-plan/pdo/carRouting/car_request.php'
-        );
-        const res2 = await api.get('/react-plan/pdo/carRouting/workdone.php');
-        // setRows(res1.data);
-        setRows(res2.data);
-        console.log(res1.data);
-        console.log(res2.data);
-      } catch (err) {}
-    };
+  //   "name": "一卡通",
+  //   "balance": 0,
+  //   "prior": 6,
+  //   "user": "dada@gmail.com",
+  //   "id": "4NV13sCkLhIhxX1EfXZF"
+  // }
 
-    fetchPosts();
+  const [rows, setRows] = useState([]);
+
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    console.clear();
+    db.collection('accounts')
+      .where('user', '==', 'dada@gmail.com')
+      // .limit(1)
+      .get()
+      .then((snapshot) => {
+        const data = snapshot.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        });
+
+        setRows(data);
+
+        const items = snapshot.docs.map((doc) => {
+          const item = doc.data();
+          return {
+            key: doc.id,
+            text: item.name,
+            value: item.name,
+          };
+        });
+
+        setOptions(items);
+
+        console.log(items);
+      });
   }, []);
   return (
     <div>
-      {/* <PostList rows={rows} /> */}
-      <CardList rows={rows} />
+      <TransList rows={options} />
+      {/* <AccList rows={rows} /> */}
     </div>
   );
 }
