@@ -7,6 +7,7 @@ export default function TransList({ rows }) {
   return (
     <div className="trans-container">
       <div className="trans-card">
+        <div className="header">轉帳作業</div>
         <div className="acc">
           <Trans rows={rows} />
         </div>
@@ -16,9 +17,9 @@ export default function TransList({ rows }) {
         <div className="acc">
           <Trans rows={rows} />
         </div>
-        <div className="acc">
-          <Button fluid primary>
-            轉帳
+        <div className="acc footer">
+          <Button fluid color="teal">
+            確定
           </Button>
         </div>
       </div>

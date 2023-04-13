@@ -15,16 +15,33 @@
 .trans-card {
   width: 80%;
   /* display: block; */
-  padding: 1em;
+  /* padding: 1em; */
   /* background-color: #8fb1b1; */
   /* margin: 2em; */
   border-radius: 0.5em;
   /* box-shadow: 0 0 2px 1px #649681; */
   border: 2px solid #8fb1b1;
+  /* opacity: 0.5; */
+}
+
+.trans-card .header {
+  font-size: 1.5em;
+  margin-bottom: 3em;
+  padding: 1em;
+  text-align: center;
+  /* background-color: rgba(255, 255, 204, 0.2); */
+  background-color: teal;
+  color: #fff;
+  opacity: 0.6;
 }
 
 .trans-card .acc {
-  margin: 1.5em;
+  /* 上右下左 */
+  margin: 2em 5em 2em 5em;
+}
+
+.trans-card .footer {
+  margin-bottom: 5em;
 }
 
 /* .trans-card .acc input {
