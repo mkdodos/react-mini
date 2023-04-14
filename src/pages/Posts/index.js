@@ -22,6 +22,7 @@ export default function Index() {
     db.collection('accounts')
       // .where('user', '==', 'dada@gmail.com')
       .where('user', '==', 'mkdodos@gmail.com')
+      .orderBy('prior')
       // .limit(1)
       .get()
       .then((snapshot) => {
