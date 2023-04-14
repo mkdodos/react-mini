@@ -37,7 +37,7 @@ export default function Index() {
             key: doc.id,
             // text: item.name + ' $' + item.balance,
             text: item.name,
-            value: item.name,
+            value: doc.id,
           };
         });
 

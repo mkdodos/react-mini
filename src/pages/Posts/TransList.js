@@ -10,6 +10,7 @@ import {
 } from 'semantic-ui-react';
 import Trans from './Trans';
 import './index.css';
+import { db } from '../../utils/firebase';
 
 export default function TransList({ rows, options }) {
   const [from, setFrom] = useState();
@@ -20,25 +21,59 @@ export default function TransList({ rows, options }) {
   const [open, setOpen] = useState(false);
 
   function handleClick() {
-    setOpen(true);
+    // const id = fromAcc.id;
+    // const amt = fromAcc.balance
+    // db.collection('accounts')
+    //   .doc(id)
+    //   .update({ balance: Number(fromAcc.balance) - amount });
+    // setOpen(true);
     // 更新帳戶餘額
-    console.log(fromAcc);
-    console.log(amount);
-    console.log(toAcc);
+
+    // 取得帳戶餘額
+    db.collection('accounts')
+      .doc(from)
+      .get()
+      .then((doc) => {
+        // 更新帳戶餘額
+
+        db.collection('accounts')
+          .doc(from)
+          .update({ balance: Number(doc.data().balance) - amount });
+      });
+
+    // 取得帳戶餘額
+    db.collection('accounts')
+      .doc(to)
+      .get()
+      .then((doc) => {
+        // 更新帳戶餘額
+
+        db.collection('accounts')
+          .doc(to)
+          .update({ balance: Number(doc.data().balance) + Number(amount) });
+      });
+
+    setOpen(true);
+
+    console.log(from);
+    // console.log(amount);
+    // console.log(toAcc);
   }
 
   function onFromChange(e, obj) {
     // 設定下拉值
-    setFrom(obj.name);
+    setFrom(obj.value);
+    setFromAcc(obj.name);
+    console.log(obj.text);
     // 依下拉值設定該帳戶資料
-    const acc = rows.filter((row) => row.name == obj.value);
-    setFromAcc(acc[0]);
+    // const acc = rows.filter((row) => row.name == obj.value);
+    // setFromAcc(acc[0]);
   }
 
   function onToChange(e, obj) {
-    setTo(obj.name);
-    const acc = rows.filter((row) => row.name == obj.value);
-    setToAcc(acc[0]);
+    setTo(obj.value);
+    // const acc = rows.filter((row) => row.name == obj.value);
+    // setToAcc(acc[0]);
   }
 
   return (
@@ -51,18 +86,14 @@ export default function TransList({ rows, options }) {
       >
         <Header icon="archive" content="轉帳成功 !" />
         <Modal.Content>
-          {/* <List relaxed="very">
-            <List.Item>{fromAcc.name}</List.Item>
-            <List.Item>{amount}</List.Item>
-            <List.Item>{toAcc.name}</List.Item>
-          </List> */}
           <div>
-            <Label size="large">{fromAcc.name}</Label>
+            <Label size="large">{fromAcc?.name}</Label>
             <Icon name="arrow right" />
             <Label size="large" color="teal">
               ${amount}
             </Label>{' '}
-            <Icon name="arrow right" /> <Label size="large">{toAcc.name}</Label>{' '}
+            <Icon name="arrow right" />{' '}
+            <Label size="large">{toAcc?.name}</Label>{' '}
           </div>
         </Modal.Content>
         <Modal.Actions>
